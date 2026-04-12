@@ -6,7 +6,8 @@ public class AIPaddleController : MonoBehaviour
 
     [SerializeField] private GameObject ball;
 
-    
+    // simple AI movement
+
     void Update()
     {
         float pos = transform.position.y;
