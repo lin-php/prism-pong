@@ -44,7 +44,16 @@ public class BallController : MonoBehaviour
     }
     void Start()
     {
+        SpawnBall();
+    }
+
+    public void SpawnBall()
+    {
+        // reset position -> middle of the field
         // set initial direction and apply velocity to the ball
+
+        transform.position = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;   
 
         float spawnY = Random.Range(-1f, 1f);
 
@@ -53,6 +62,5 @@ public class BallController : MonoBehaviour
         direction = direction.normalized;
 
         rb.linearVelocity = direction * speed;
-        
     }
 }
