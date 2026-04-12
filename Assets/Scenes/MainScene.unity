@@ -1276,8 +1276,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc731cdd37d371f4e9ce2c333370268e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIPaddleController
-  speed: 5
+  speed: 6
   ball: {fileID: 1174740543}
+  offsetRange: 0.47
+  offsetChangeInterval: 4
+  deadzone: 0.4
+  offsetSmoothSpeed: 0.9
 --- !u!212 &909236787
 SpriteRenderer:
   serializedVersion: 2
