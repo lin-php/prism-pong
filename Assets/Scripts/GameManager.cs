@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     private int playerScore;
     private int aiScore;
 
-
     // add points if goaled
 
     public void AddPlayerPoint()
@@ -37,4 +36,14 @@ public class GameManager : MonoBehaviour
     {
         UpdateScoreUI();
     }
+
+    // reset score and ball position
+    public void RestartGame()
+    {
+        playerScore = 0;
+        aiScore = 0;
+        UpdateScoreUI();
+        ballController.SpawnBall();
+    }
+
 }
