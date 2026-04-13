@@ -4,12 +4,13 @@ public class BallController : MonoBehaviour
 {
 
     [SerializeField] private float speed = 4f;
+    
 
     private Rigidbody2D rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();   
+        rb = GetComponent<Rigidbody2D>();    
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -63,4 +64,5 @@ public class BallController : MonoBehaviour
 
         rb.linearVelocity = direction * speed;
     }
+
 }
