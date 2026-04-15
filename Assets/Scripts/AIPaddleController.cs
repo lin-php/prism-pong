@@ -13,16 +13,19 @@ public class AIPaddleController : MonoBehaviour
     [SerializeField] private float offsetSmoothSpeed = 1f;
 
     private List<GameObject> balls;
-
+   
     private float currentOffset;
     private float targetOffset;
 
     private GameObject currentBall;
-
+    private GameObject bestBall;
+    private float bestX;
+    private float targetY;
     private float timer;
 
     private void Start()
     {
+
         RandomOffset();
         currentOffset = targetOffset;
         timer = offsetChangeInterval;
@@ -58,18 +61,21 @@ public class AIPaddleController : MonoBehaviour
 
         float pos = transform.position.y;
 
-        if (balls == null || balls.Count == 0)
-        {
-            return;
-
-        }
- 
-        currentBall = balls[0];
+        if (balls == null || balls.Count == 0) return;
         
-        float ballY = currentBall.transform.position.y;
+        // checking all balls for new target
+        TargetedBall();
+        if (currentBall == null)
+        {
+            targetY = 0f;
+        }
+        else
+        {
+            targetY = currentBall.transform.position.y; 
+        }
 
         // movement
-        float difference = (ballY + currentOffset) - pos;
+        float difference = (targetY + currentOffset) - pos;
         float direction = 0f;
 
         if (difference > deadzone)
@@ -88,4 +94,35 @@ public class AIPaddleController : MonoBehaviour
         transform.position = new Vector2 (transform.position.x, clampedY);
 
     }
+
+    private void TargetedBall()
+    {
+        bestBall = null;
+        bestX = Mathf.NegativeInfinity;
+
+        if (balls == null || balls.Count == 0) return;
+        
+        foreach (GameObject ball in balls)
+        {
+            Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
+
+            if (rb == null || rb.linearVelocity.x <= 0)
+            {
+                  continue;
+            }
+
+            float x = ball.transform.position.x;
+
+            if (x > bestX)
+            {
+                  bestX = x;
+                  bestBall = ball;
+            }
+        }
+         
+        currentBall = bestBall;
+
+        
+    }
+
 }
