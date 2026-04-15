@@ -21,7 +21,7 @@ public class GoalZone : MonoBehaviour
             else
             {
                 Debug.Log("Player bekommt Punkt");
-                gameManager.AddPlayerPoint();  
+                gameManager.AddPlayerPoint(collider.gameObject);  
             }
         }
     }

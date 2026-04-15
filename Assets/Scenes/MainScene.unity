@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 31427054}
   - component: {fileID: 31427053}
   m_Layer: 5
-  m_Name: PlayerScore
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1287,7 +1287,7 @@ GameObject:
   - component: {fileID: 1064313956}
   - component: {fileID: 1064313955}
   m_Layer: 5
-  m_Name: AiScore
+  m_Name: "AiScore (SP\xC4TER PLAYER LIFES)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1456,12 +1456,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3390fea70ab236f4a96dca26236d30f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerScoreText: {fileID: 31427053}
-  aiScoreText: {fileID: 1064313955}
+  scoreText: {fileID: 31427053}
   ball1Prefab: {fileID: 3473320474470223006, guid: f91143a9424c2ef428e6a9f08de0dd04, type: 3}
   ball2Prefab: {fileID: 3140724145937028481, guid: 022483adab4a3cf48a9b24e5b8e71a1a, type: 3}
-  ball2Spawntimer: 5
+  ball1Spawntimer: 3
   AiPaddle: {fileID: 235988132}
+  maxBallsareSpawned: 10
 --- !u!1 &1397622771
 GameObject:
   m_ObjectHideFlags: 0

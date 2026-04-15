@@ -5,17 +5,18 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
    
-    [SerializeField] private TextMeshProUGUI playerScoreText;
-    [SerializeField] private TextMeshProUGUI aiScoreText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    // [SerializeField] private TextMeshProUGUI aiScoreText;
     [SerializeField] private GameObject ball1Prefab;
     [SerializeField] private GameObject ball2Prefab;
-    [SerializeField] private float ball2Spawntimer = 5f;
+    [SerializeField] private float ball1Spawntimer = 3f;
     [SerializeField] private GameObject AiPaddle;
+    [SerializeField] private int maxBallsareSpawned = 10;
 
-    private int playerScore;
+    private int score;
     private int aiScore;
-    private float timerball2;
-    private bool ball2isSpawned = false;
+    private float timerball;
+    
     private AIPaddleController aIPaddleController;
 
     private List<GameObject> activeBalls = new List<GameObject>();  
@@ -25,25 +26,31 @@ public class GameManager : MonoBehaviour
     {
         aIPaddleController = AiPaddle.GetComponent<AIPaddleController>();
 
-        timerball2 = 0f;
+        timerball = 0f;
         UpdateScoreUI();
         Ball1Instantiate();
     }
 
     private void Update()
     {
-        timerball2 += Time.deltaTime;
+        timerball += Time.deltaTime;
 
-        if (!ball2isSpawned && timerball2 >= ball2Spawntimer)
+        // checks how many balls are ingame, will spawn more balls if place is available
+
+        if (timerball >= ball1Spawntimer && activeBalls.Count < maxBallsareSpawned)
         { 
-            GameObject ball2 = Instantiate(ball2Prefab);
-            BallController ball2Controller = ball2.GetComponent<BallController>();
+            GameObject ball1 = Instantiate(ball1Prefab);
+            BallController ball2Controller = ball1.GetComponent<BallController>();
             ball2Controller.SpawnBall();
-            activeBalls.Add(ball2);
+            activeBalls.Add(ball1);
 
             aIPaddleController.SetBalls(activeBalls);
 
-            ball2isSpawned = true;
+            if (activeBalls.Count != maxBallsareSpawned) 
+            { 
+                timerball = 0f;
+            }
+             
         }
     }
 
@@ -55,14 +62,12 @@ public class GameManager : MonoBehaviour
         activeBalls.Add(ball1); 
     }
 
-    public void AddPlayerPoint()
+    public void AddPlayerPoint(GameObject scoringBall)
     {
-        playerScore++;
+        score++;
         UpdateScoreUI();
-        ClearBalls();
-        Ball1Instantiate();
-        timerball2 = 0f;
-        ball2isSpawned = false;
+        activeBalls.Remove(scoringBall);
+        Destroy(scoringBall);
     }
 
     public void AddAiPoint()
@@ -71,22 +76,22 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
         ClearBalls();
         Ball1Instantiate();
-        timerball2 = 0f;
-        ball2isSpawned = false;
+        timerball = 0f;
+        
     }
 
     // UI Score update
     private void UpdateScoreUI()
     {
-        playerScoreText.text = playerScore.ToString();
-        aiScoreText.text = aiScore.ToString();
+        scoreText.text = "Score: " + score.ToString();
+        // aiScoreText.text = aiScore.ToString();
     }
    
     // reset score and ball position
     public void RestartGame()
     {
         ClearBalls();
-        playerScore = 0;
+        score = 0;
         aiScore = 0;
         UpdateScoreUI();
         Ball1Instantiate();
