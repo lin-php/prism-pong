@@ -6,11 +6,12 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI streakText;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI TierUI;
     [SerializeField] private GameObject ball1Prefab;
     [SerializeField] private GameObject ball2Prefab;
     [SerializeField] private float ball1Spawntimer = 4f;
     [SerializeField] private GameObject AiPaddle;
-    [SerializeField] private int maxBallsareSpawned = 10;
+    [SerializeField] private int maxBallsAreSpawned = 8;
     [SerializeField] private int minBalls = 2;
     [SerializeField] private int extraPoints = 100;
 
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
 
         // checks how many balls are ingame, will spawn more balls if place is available
 
-        if (timerball >= ball1Spawntimer && activeBalls.Count < maxBallsareSpawned)
+        if (timerball >= ball1Spawntimer && activeBalls.Count < maxBallsAreSpawned)
         { 
             GameObject ball1 = Instantiate(ball1Prefab);
             BallController ball2Controller = ball1.GetComponent<BallController>();
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
     public void AddPlayerPointonGoal(GameObject scoringBall)
     {
         score += multiplier;
+        streak++;
+        multiplier = streak;
         UpdateScoreUI();
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
@@ -76,10 +79,23 @@ public class GameManager : MonoBehaviour
         multiplier = streak;
         score += multiplier;
 
-        if (streak % 10 == 0)
+        if (streak % 20 == 0)
+        {
+            score += (extraPoints + 100);
+
+            ClearBalls();
+            timerball = 0f;
+            Ball1Instantiate();
+            Debug.Log("MEGA HIT!!!");
+            Tier++;
+        }
+        else if (streak % 15 == 0)
+        {
+            score += (extraPoints + 50);
+        }
+        else if (streak % 10 == 0)
         {
             score += extraPoints;
-            Tier++;
         }
         else if (streak % 5 == 0)
         {
@@ -104,6 +120,7 @@ public class GameManager : MonoBehaviour
     {
         scoreText.text = "Score: " + score.ToString();
         streakText.text = "Streak: " + streak.ToString();  
+        TierUI.text = "Tier: " + Tier.ToString();
         
     }
    
