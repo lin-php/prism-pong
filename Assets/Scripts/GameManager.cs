@@ -4,19 +4,21 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-   
+    [SerializeField] private TextMeshProUGUI streakText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject ball1Prefab;
     [SerializeField] private GameObject ball2Prefab;
-    [SerializeField] private float ball1Spawntimer = 3f;
+    [SerializeField] private float ball1Spawntimer = 4f;
     [SerializeField] private GameObject AiPaddle;
     [SerializeField] private int maxBallsareSpawned = 10;
-    [SerializeField] private int multiplier = 1;
     [SerializeField] private int minBalls = 2;
+    [SerializeField] private int extraPoints = 100;
 
     private int score;
-    
+    private int streak = 0;
+    private int multiplier = 1;
     private float timerball;
+    private int Tier = 1;
     
     private AIPaddleController aIPaddleController;
 
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void AddPlayerPointonGoal(GameObject scoringBall)
     {
-        score++;
+        score += multiplier;
         UpdateScoreUI();
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
@@ -70,30 +72,39 @@ public class GameManager : MonoBehaviour
 
     public void AddPlayerPointonPaddlehit()
     {
+        streak++;
+        multiplier = streak;
         score += multiplier;
 
-        if (multiplier < 10)
+        if (streak % 10 == 0)
         {
-            multiplier++;
+            score += extraPoints;
+            Tier++;
         }
-        
+        else if (streak % 5 == 0)
+        {
+            score += (extraPoints / 2);
+        }
+
         UpdateScoreUI();
     }
 
     public void AiGoalHit(GameObject scoringBall)
     {
+        streak = 0;
         multiplier = 1;
         ReduceBalls(0.3f);
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
-        timerball = 0f;
+        UpdateScoreUI();
     }
 
     // UI Score update
     private void UpdateScoreUI()
     {
         scoreText.text = "Score: " + score.ToString();
-        // aiScoreText.text = aiScore.ToString();
+        streakText.text = "Streak: " + streak.ToString();  
+        
     }
    
     // reset score and ball position
@@ -115,7 +126,6 @@ public class GameManager : MonoBehaviour
         activeBalls.Clear();
     }
 
-
     // Reduces the number of active balls by a given percentage,
     // while ensuring that at least a minimum number of balls remain in the game.
     private void ReduceBalls(float percentage)
@@ -135,9 +145,6 @@ public class GameManager : MonoBehaviour
             activeBalls.Remove(removeBall);
             Destroy(removeBall);
         }
-
     }
-
-
 
 }
