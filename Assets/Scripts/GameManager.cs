@@ -1,12 +1,17 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI streakText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
+    [SerializeField] private TextMeshProUGUI GameOverScoretext;
+    [SerializeField] private GameObject GameOverPanel;
+    [SerializeField] private Slider DangerUI;
     [SerializeField] private GameObject ball1Prefab;
     [SerializeField] private GameObject ball2Prefab;
     [SerializeField] private float ball1Spawntimer = 4f;
@@ -63,6 +68,7 @@ public class GameManager : MonoBehaviour
         // recovery rate
         currentDanger -= dangerRecoveryRate * Time.deltaTime;
         currentDanger = Mathf.Clamp(currentDanger, 0f, maxDanger);
+        SliderDanger();
     }
 
     // player gets damage
@@ -70,10 +76,16 @@ public class GameManager : MonoBehaviour
     {
         currentDanger += amount;
         currentDanger = Mathf.Clamp(currentDanger, 0, maxDanger);
+        SliderDanger();
         if (currentDanger >= maxDanger)
         {
             GameOver();
         }
+    }
+
+    private void SliderDanger()
+    {
+        DangerUI.value = currentDanger;
     }
 
     // Game Over
@@ -81,6 +93,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Time.timeScale = 0f;
+        GameOverPanel.SetActive(true);  
     }
 
     private void Ball1Instantiate()
@@ -154,16 +167,30 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         streakText.text = "Streak: " + streak.ToString();  
         TierUI.text = "Tier: " + Tier.ToString();
-        
+        GameOverScoretext.text = "Score: " + score.ToString();
     }
    
     // reset score and ball position
     public void RestartGame()
     {
+        isGameOver = false;
+        Time.timeScale = 1f;
+        currentDanger = 0f;
+        GameOverPanel.SetActive(false);
+        SliderDanger();
         ClearBalls();
         score = 0;
+        multiplier = 1;
+        streak = 0;
+        Tier = 1;
         UpdateScoreUI();
         Ball1Instantiate();
+        timerball = 0f;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     private void ClearBalls()
