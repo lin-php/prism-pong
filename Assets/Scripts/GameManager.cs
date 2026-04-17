@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
     {
         streak = 0;
         multiplier = 1;
-        ReduceBalls(0.3f);
+        // ReduceBalls(0.3f);
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
         UpdateScoreUI();
@@ -143,6 +143,8 @@ public class GameManager : MonoBehaviour
         activeBalls.Clear();
     }
 
+
+    // currently unused. 
     // Reduces the number of active balls by a given percentage,
     // while ensuring that at least a minimum number of balls remain in the game.
     private void ReduceBalls(float percentage)
