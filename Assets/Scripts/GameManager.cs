@@ -14,12 +14,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int maxBallsAreSpawned = 8;
     [SerializeField] private int minBalls = 2;
     [SerializeField] private int extraPoints = 100;
+    [SerializeField] private int maxDanger = 100;
+    [SerializeField] private int dangerPerMiss = 25;
+    [SerializeField] private float dangerRecoveryRate = 6f;
 
     private int score;
     private int streak = 0;
     private int multiplier = 1;
     private float timerball;
     private int Tier = 1;
+    private float currentDanger;
+    private bool isGameOver = false;
     
     private AIPaddleController aIPaddleController;
 
@@ -38,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (isGameOver) return;
+
         timerball += Time.deltaTime;
 
         // checks how many balls are ingame, will spawn more balls if place is available
@@ -53,6 +60,27 @@ public class GameManager : MonoBehaviour
             timerball = 0f;
         }
 
+        // recovery rate
+        currentDanger -= dangerRecoveryRate * Time.deltaTime;
+        currentDanger = Mathf.Clamp(currentDanger, 0f, maxDanger);
+    }
+
+    // player gets damage
+    private void AddDamage(float amount)
+    {
+        currentDanger += amount;
+        currentDanger = Mathf.Clamp(currentDanger, 0, maxDanger);
+        if (currentDanger >= maxDanger)
+        {
+            GameOver();
+        }
+    }
+
+    // Game Over
+    private void GameOver()
+    {
+        isGameOver = true;
+        Time.timeScale = 0f;
     }
 
     private void Ball1Instantiate()
@@ -109,7 +137,12 @@ public class GameManager : MonoBehaviour
     {
         streak = 0;
         multiplier = 1;
+
+        // player gets damage
+        AddDamage(dangerPerMiss);
+
         // ReduceBalls(0.3f);
+
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
         UpdateScoreUI();
