@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-
     [SerializeField] private float speed = 4f;
+    [SerializeField] private GameManager gameManager;
     
-
     private Rigidbody2D rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();    
+        rb = GetComponent<Rigidbody2D>(); 
+        
+        gameManager = FindFirstObjectByType<GameManager>();  
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -28,6 +29,9 @@ public class BallController : MonoBehaviour
             directionHit = directionHit.normalized;
 
             rb.linearVelocity = directionHit * speed;
+
+            gameManager.AddPlayerPointonPaddlehit();
+
         }
 
         if (collision.gameObject.CompareTag("rechterPaddle"))
@@ -43,11 +47,7 @@ public class BallController : MonoBehaviour
             rb.linearVelocity = directionHit * speed;
         }
     }
-    void Start()
-    {
-        SpawnBall();
-    }
-
+    
     public void SpawnBall()
     {
         // reset position -> middle of the field

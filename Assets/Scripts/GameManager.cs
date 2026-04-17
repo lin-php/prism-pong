@@ -6,15 +6,16 @@ public class GameManager : MonoBehaviour
 {
    
     [SerializeField] private TextMeshProUGUI scoreText;
-    // [SerializeField] private TextMeshProUGUI aiScoreText;
     [SerializeField] private GameObject ball1Prefab;
     [SerializeField] private GameObject ball2Prefab;
     [SerializeField] private float ball1Spawntimer = 3f;
     [SerializeField] private GameObject AiPaddle;
     [SerializeField] private int maxBallsareSpawned = 10;
+    [SerializeField] private int multiplier = 1;
+    [SerializeField] private int minBalls = 2;
 
     private int score;
-    private int aiScore;
+    
     private float timerball;
     
     private AIPaddleController aIPaddleController;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         timerball = 0f;
         UpdateScoreUI();
         Ball1Instantiate();
+        aIPaddleController.SetBalls(activeBalls);
     }
 
     private void Update()
@@ -45,13 +47,9 @@ public class GameManager : MonoBehaviour
             activeBalls.Add(ball1);
 
             aIPaddleController.SetBalls(activeBalls);
-
-            if (activeBalls.Count != maxBallsareSpawned) 
-            { 
-                timerball = 0f;
-            }
-             
+            timerball = 0f;
         }
+
     }
 
     private void Ball1Instantiate()
@@ -62,7 +60,7 @@ public class GameManager : MonoBehaviour
         activeBalls.Add(ball1); 
     }
 
-    public void AddPlayerPoint(GameObject scoringBall)
+    public void AddPlayerPointonGoal(GameObject scoringBall)
     {
         score++;
         UpdateScoreUI();
@@ -70,14 +68,25 @@ public class GameManager : MonoBehaviour
         Destroy(scoringBall);
     }
 
-    public void AddAiPoint()
+    public void AddPlayerPointonPaddlehit()
     {
-        aiScore++;
-        UpdateScoreUI();
-        ClearBalls();
-        Ball1Instantiate();
-        timerball = 0f;
+        score += multiplier;
+
+        if (multiplier < 10)
+        {
+            multiplier++;
+        }
         
+        UpdateScoreUI();
+    }
+
+    public void AiGoalHit(GameObject scoringBall)
+    {
+        multiplier = 1;
+        ReduceBalls(0.3f);
+        activeBalls.Remove(scoringBall);
+        Destroy(scoringBall);
+        timerball = 0f;
     }
 
     // UI Score update
@@ -92,7 +101,6 @@ public class GameManager : MonoBehaviour
     {
         ClearBalls();
         score = 0;
-        aiScore = 0;
         UpdateScoreUI();
         Ball1Instantiate();
     }
@@ -106,5 +114,30 @@ public class GameManager : MonoBehaviour
 
         activeBalls.Clear();
     }
+
+
+    // Reduces the number of active balls by a given percentage,
+    // while ensuring that at least a minimum number of balls remain in the game.
+    private void ReduceBalls(float percentage)
+    {
+        int ballsToRemove = Mathf.FloorToInt(activeBalls.Count * percentage);
+
+        int maxRemovable = activeBalls.Count - minBalls;
+
+        ballsToRemove = Mathf.Min(ballsToRemove, maxRemovable);
+
+        for (int i = 0; i < ballsToRemove; i++)
+        {
+            if (activeBalls.Count == 0) return;
+
+            GameObject removeBall = activeBalls[activeBalls.Count - 1];
+
+            activeBalls.Remove(removeBall);
+            Destroy(removeBall);
+        }
+
+    }
+
+
 
 }

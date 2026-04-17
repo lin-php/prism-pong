@@ -15,13 +15,12 @@ public class GoalZone : MonoBehaviour
         {
             if (isLeftGoal)
             {
-                Debug.Log("AI bekommt Punkt");
-                gameManager.AddAiPoint();
+                gameManager.AiGoalHit(collider.gameObject);
+
             }
             else
             {
-                Debug.Log("Player bekommt Punkt");
-                gameManager.AddPlayerPoint(collider.gameObject);  
+                gameManager.AddPlayerPointonGoal(collider.gameObject);  
             }
         }
     }
