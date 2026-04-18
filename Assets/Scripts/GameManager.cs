@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
@@ -15,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreGameOverText;
     [SerializeField] private TextMeshProUGUI newHighScoreTextGameOver;
     [SerializeField] private TextMeshProUGUI FeedbackText;
+    [SerializeField] private TextMeshProUGUI FeedbackTextCombo;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider DangerUI;
     [SerializeField] private GameObject ball1Prefab;
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private float _speedTimer;
     private float currentSpeedBonus = 0;
     private Coroutine feedbackcoroutine;
+    private Coroutine feedbackcombocoroutine;
     
     private AIPaddleController aIPaddleController;
 
@@ -169,6 +170,8 @@ public class GameManager : MonoBehaviour
         multiplier = streak;
         score += multiplier;
 
+        ShowFeedbackCombo("+" + streak);
+
         if (streak % 20 == 0)
         {
             score += (extraPoints + 100);
@@ -245,6 +248,25 @@ public class GameManager : MonoBehaviour
         feedbackcoroutine = null;
     }
 
+    private void ShowFeedbackCombo(string feedback)
+    {
+        FeedbackTextCombo.text = feedback;
+
+        if(feedbackcombocoroutine != null)
+        {
+            StopCoroutine(feedbackcombocoroutine);
+        }
+        feedbackcombocoroutine = StartCoroutine(FeedbackComboRoutine());
+    }
+
+    private IEnumerator FeedbackComboRoutine()
+    {
+        FeedbackTextCombo.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        FeedbackTextCombo.gameObject.SetActive(false);
+        feedbackcombocoroutine = null;
+    }
+
 
     // reset score and ball position
     public void RestartGame()
@@ -281,7 +303,6 @@ public class GameManager : MonoBehaviour
         activeBalls.Clear();
     }
 
-
     // currently unused. 
     // Reduces the number of active balls by a given percentage,
     // while ensuring that at least a minimum number of balls remain in the game.
@@ -303,6 +324,4 @@ public class GameManager : MonoBehaviour
             Destroy(removeBall);
         }
     }
-
-
 }
