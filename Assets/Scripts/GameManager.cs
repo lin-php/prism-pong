@@ -94,10 +94,10 @@ public class GameManager : MonoBehaviour
             foreach (GameObject ball in activeBalls) 
             {
                 BallController ballController = ball.GetComponent<BallController>();
-                ballController.IncreaseBallSpeed(0.2f);
+                ballController.IncreaseBallSpeed(0.15f);
             }
 
-            currentSpeedBonus += 0.2f;
+            currentSpeedBonus += 0.15f;
 
             if (ball1Spawntimer > 2f)
             {
@@ -170,8 +170,6 @@ public class GameManager : MonoBehaviour
         multiplier = streak;
         score += multiplier;
 
-        ShowFeedbackCombo("+" + streak);
-
         if (streak % 20 == 0)
         {
             score += (extraPoints + 100);
@@ -179,22 +177,29 @@ public class GameManager : MonoBehaviour
             ClearBalls();
             timerball = 0f;
             Ball1Instantiate();
-            
+            ShowFeedbackCombo("+" + streak + " EXCELLENT!");
+            ShowFeedback("INSANE!");
             Tier++;
         }
         else if (streak % 15 == 0)
         {
             score += (extraPoints + 50);
+            ShowFeedbackCombo("+" + streak + " AWESOME!");
         }
         else if (streak % 10 == 0)
         {
             score += extraPoints;
+            ShowFeedbackCombo("+" + streak + " GREAT!");
         }
         else if (streak % 5 == 0)
         {
             score += (extraPoints / 2);
+            ShowFeedbackCombo("+" + streak + " GOOD!");
         }
-
+        else
+        {
+            ShowFeedbackCombo("+" + streak);
+        }
         UpdateScoreUI();
     }
 
