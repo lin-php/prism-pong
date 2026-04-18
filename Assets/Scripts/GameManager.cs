@@ -3,6 +3,7 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI GameOverScoretext;
     [SerializeField] private TextMeshProUGUI highScorePauseText;
     [SerializeField] private TextMeshProUGUI highScoreGameOverText;
+    [SerializeField] private TextMeshProUGUI newHighScoreTextGameOver;
+    [SerializeField] private TextMeshProUGUI FeedbackText;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider DangerUI;
     [SerializeField] private GameObject ball1Prefab;
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
     private float _speedTimer;
     private float currentSpeedBonus = 0;
+    private Coroutine feedbackcoroutine;
     
     private AIPaddleController aIPaddleController;
 
@@ -131,8 +135,13 @@ public class GameManager : MonoBehaviour
         {
             highScore = score;  
             PlayerPrefs.SetInt(highScoreKey, score);
+            newHighScoreTextGameOver.gameObject.SetActive(true);
         }
-        UpdateHighScoreUI();
+        else
+        {
+            newHighScoreTextGameOver.gameObject.SetActive(false);
+        }
+            UpdateHighScoreUI();
     }
 
     private void Ball1Instantiate()
@@ -151,6 +160,7 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
+        ShowFeedback("GOAL!");
     }
 
     public void AddPlayerPointonPaddlehit()
@@ -215,6 +225,27 @@ public class GameManager : MonoBehaviour
         highScoreGameOverText.text = "High Score: " + highScore.ToString();
     }
    
+    // Feedback Text method and coroutine for show/hide feedback text
+    private void ShowFeedback(string feedback)
+    {
+        FeedbackText.text = feedback;
+
+        if(feedbackcoroutine != null) 
+        {
+            StopCoroutine(feedbackcoroutine);  
+        }
+
+        feedbackcoroutine = StartCoroutine(FeedbackRoutine());
+    }
+    private IEnumerator FeedbackRoutine()
+    {
+        FeedbackText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        FeedbackText.gameObject.SetActive(false);
+        feedbackcoroutine = null;
+    }
+
+
     // reset score and ball position
     public void RestartGame()
     {
@@ -231,7 +262,8 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
         Ball1Instantiate();
         timerball = 0f;
-        UpdateHighScoreUI();    
+        UpdateHighScoreUI();
+        newHighScoreTextGameOver.gameObject.SetActive(false);
     }
 
     public void QuitGame()
