@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int maxDanger = 100;
     [SerializeField] private int dangerPerMiss = 25;
     [SerializeField] private float dangerRecoveryRate = 6f;
+    [SerializeField] private float speedTimer = 20f;
 
     private int score;
     private int streak = 0;
@@ -30,6 +31,8 @@ public class GameManager : MonoBehaviour
     private int Tier = 1;
     private float currentDanger;
     private bool isGameOver = false;
+    private float _speedTimer;
+    private float currentSpeedBonus = 0;
     
     private AIPaddleController aIPaddleController;
 
@@ -57,8 +60,9 @@ public class GameManager : MonoBehaviour
         if (timerball >= ball1Spawntimer && activeBalls.Count < maxBallsAreSpawned)
         { 
             GameObject ball1 = Instantiate(ball1Prefab);
-            BallController ball2Controller = ball1.GetComponent<BallController>();
-            ball2Controller.SpawnBall();
+            BallController ball1Controller = ball1.GetComponent<BallController>();
+            ball1Controller.SpawnBall();
+            ball1Controller.IncreaseBallSpeed(currentSpeedBonus);
             activeBalls.Add(ball1);
 
             aIPaddleController.SetBalls(activeBalls);
@@ -69,6 +73,22 @@ public class GameManager : MonoBehaviour
         currentDanger -= dangerRecoveryRate * Time.deltaTime;
         currentDanger = Mathf.Clamp(currentDanger, 0f, maxDanger);
         SliderDanger();
+
+        // increase Ball Speed after increase play time; escalation system
+        _speedTimer += Time.deltaTime;
+
+        if(_speedTimer >= speedTimer)
+        {
+            foreach (GameObject ball in activeBalls) 
+            {
+                BallController ballController = ball.GetComponent<BallController>();
+                ballController.IncreaseBallSpeed(0.5f);
+
+                currentSpeedBonus += 0.5f;
+            }
+
+            _speedTimer = 0f;
+        }
     }
 
     // player gets damage
@@ -127,7 +147,7 @@ public class GameManager : MonoBehaviour
             ClearBalls();
             timerball = 0f;
             Ball1Instantiate();
-            Debug.Log("MEGA HIT!!!");
+            
             Tier++;
         }
         else if (streak % 15 == 0)

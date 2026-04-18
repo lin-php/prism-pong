@@ -18,6 +18,11 @@ public class BallController : MonoBehaviour
         targetSpeed = speed;
     }
 
+    public void IncreaseBallSpeed(float amount)
+    {
+        speed += amount;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // calculate bounce direction based on hit position
