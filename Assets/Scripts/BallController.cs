@@ -21,6 +21,7 @@ public class BallController : MonoBehaviour
     public void IncreaseBallSpeed(float amount)
     {
         speed += amount;
+        targetSpeed = speed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

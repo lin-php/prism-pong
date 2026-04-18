@@ -61,8 +61,8 @@ public class GameManager : MonoBehaviour
         { 
             GameObject ball1 = Instantiate(ball1Prefab);
             BallController ball1Controller = ball1.GetComponent<BallController>();
-            ball1Controller.SpawnBall();
             ball1Controller.IncreaseBallSpeed(currentSpeedBonus);
+            ball1Controller.SpawnBall();
             activeBalls.Add(ball1);
 
             aIPaddleController.SetBalls(activeBalls);
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         currentDanger = Mathf.Clamp(currentDanger, 0f, maxDanger);
         SliderDanger();
 
-        // increase Ball Speed after increase play time; escalation system
+        // increase Ball Speed after increase play time; escalation system; increase spawntimer as well
         _speedTimer += Time.deltaTime;
 
         if(_speedTimer >= speedTimer)
@@ -82,9 +82,14 @@ public class GameManager : MonoBehaviour
             foreach (GameObject ball in activeBalls) 
             {
                 BallController ballController = ball.GetComponent<BallController>();
-                ballController.IncreaseBallSpeed(0.5f);
+                ballController.IncreaseBallSpeed(0.2f);
+            }
 
-                currentSpeedBonus += 0.5f;
+            currentSpeedBonus += 0.2f;
+
+            if (ball1Spawntimer > 2f)
+            {
+                ball1Spawntimer -= 0.2f;
             }
 
             _speedTimer = 0f;
