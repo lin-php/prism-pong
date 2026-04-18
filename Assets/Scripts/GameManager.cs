@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
     [SerializeField] private TextMeshProUGUI GameOverScoretext;
+    [SerializeField] private TextMeshProUGUI highScorePauseText;
+    [SerializeField] private TextMeshProUGUI highScoreGameOverText;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider DangerUI;
     [SerializeField] private GameObject ball1Prefab;
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float dangerRecoveryRate = 6f;
     [SerializeField] private float speedTimer = 20f;
 
+    private string highScoreKey = "HighScore";
+    private int highScore;
     private int score;
     private int streak = 0;
     private int multiplier = 1;
@@ -41,6 +45,9 @@ public class GameManager : MonoBehaviour
     // add points if goaled
     private void Start()
     {
+        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
+        UpdateHighScoreUI();
+
         aIPaddleController = AiPaddle.GetComponent<AIPaddleController>();
 
         timerball = 0f;
@@ -118,7 +125,14 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Time.timeScale = 0f;
-        GameOverPanel.SetActive(true);  
+        GameOverPanel.SetActive(true);
+
+        if(score > highScore)
+        {
+            highScore = score;  
+            PlayerPrefs.SetInt(highScoreKey, score);
+        }
+        UpdateHighScoreUI();
     }
 
     private void Ball1Instantiate()
@@ -194,6 +208,12 @@ public class GameManager : MonoBehaviour
         TierUI.text = "Tier: " + Tier.ToString();
         GameOverScoretext.text = "Score: " + score.ToString();
     }
+
+    private void UpdateHighScoreUI()
+    {
+        highScorePauseText.text = "High Score: " + highScore.ToString();
+        highScoreGameOverText.text = "High Score: " + highScore.ToString();
+    }
    
     // reset score and ball position
     public void RestartGame()
@@ -211,6 +231,7 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
         Ball1Instantiate();
         timerball = 0f;
+        UpdateHighScoreUI();    
     }
 
     public void QuitGame()
@@ -250,5 +271,6 @@ public class GameManager : MonoBehaviour
             Destroy(removeBall);
         }
     }
+
 
 }
