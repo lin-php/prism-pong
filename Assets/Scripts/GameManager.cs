@@ -108,9 +108,9 @@ public class GameManager : MonoBehaviour
 
             currentSpeedBonus += increaseBallSpeed;
 
-            if (ball1Spawntimer > 1.5f)
+            if (ball1Spawntimer > 1f)
             {
-                ball1Spawntimer -= 0.3f;
+                ball1Spawntimer -= 0.2f;
             }
 
             _speedTimer = 0f;
@@ -168,6 +168,7 @@ public class GameManager : MonoBehaviour
         streak++;
         multiplier = streak;
         UpdateScoreUI();
+        Milestone();
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
         ShowFeedback("GOAL!");
@@ -178,7 +179,13 @@ public class GameManager : MonoBehaviour
         streak++;
         multiplier = streak;
         score += multiplier;
+        UpdateScoreUI();
+        Milestone();
+    }
 
+    // Event System
+    private void Milestone()
+    {
         if (streak % 20 == 0)
         {
             score += (extraPoints + 100);

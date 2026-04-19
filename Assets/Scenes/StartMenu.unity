@@ -1209,7 +1209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Hallo Michi und Akim! \n\nnichts ist hier final, au\xDFer grunds\xE4tzlich
+  m_text: "Hallo Michi und Akim! \n\n\nnichts ist hier final, au\xDFer grunds\xE4tzlich
     die Game Mechanics (Gameplay Loop). Die Sounds sind \"Platzhalter\". Versch\xF6nerung
     kommt alles noch. Ich brauche dringend eure Gaming Erfahrung bezogen auf den
     ersten Test hinsichtlich:\n\n- Schwierigkeit (zu leicht, zu schwer, fair genug)?
