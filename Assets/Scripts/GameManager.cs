@@ -18,17 +18,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider DangerUI;
     [SerializeField] private GameObject ball1Prefab;
-    [SerializeField] private GameObject ball2Prefab;
-    [SerializeField] private float ball1Spawntimer = 4f;
+    [SerializeField] private float ball1Spawntimer = 7f;
     [SerializeField] private GameObject AiPaddle;
-    [SerializeField] private int maxBallsAreSpawned = 8;
+    [SerializeField] private int baseMaxBalls = 6;
     [SerializeField] private int minBalls = 2;
     [SerializeField] private int extraPoints = 100;
     [SerializeField] private int maxDanger = 100;
     [SerializeField] private int dangerPerMiss = 25;
-    [SerializeField] private float dangerRecoveryRate = 6f;
-    [SerializeField] private float speedTimer = 20f;
-
+    [SerializeField] private float baseRecoveryRate = 5f;
+    [SerializeField] private float extraRecoveryPerTier = 0.5f;
+    [SerializeField] private float speedTimer = 30f;
+    [SerializeField] private float increaseBallSpeed = 0.10f;
     [SerializeField] private AudioClip EventSoundStreak;
 
     
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     private int score;
     private int streak = 0;
     private int multiplier = 1;
+    private int extraBallsPerTier = 1;
     private float timerball;
     private int Tier = 1;
     private float currentDanger;
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         // checks how many balls are ingame, will spawn more balls if place is available
 
-        if (timerball >= ball1Spawntimer && activeBalls.Count < maxBallsAreSpawned)
+        if (timerball >= ball1Spawntimer && activeBalls.Count < MaxBalls())
         { 
             GameObject ball1 = Instantiate(ball1Prefab);
             BallController ball1Controller = ball1.GetComponent<BallController>();
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviour
         }
 
         // recovery rate
-        currentDanger -= dangerRecoveryRate * Time.deltaTime;
+        currentDanger -= RecoveryRate() * Time.deltaTime;
         currentDanger = Mathf.Clamp(currentDanger, 0f, maxDanger);
         SliderDanger();
 
@@ -102,14 +103,14 @@ public class GameManager : MonoBehaviour
             foreach (GameObject ball in activeBalls) 
             {
                 BallController ballController = ball.GetComponent<BallController>();
-                ballController.IncreaseBallSpeed(0.15f);
+                ballController.IncreaseBallSpeed(increaseBallSpeed);
             }
 
-            currentSpeedBonus += 0.15f;
+            currentSpeedBonus += increaseBallSpeed;
 
-            if (ball1Spawntimer > 2f)
+            if (ball1Spawntimer > 1.5f)
             {
-                ball1Spawntimer -= 0.2f;
+                ball1Spawntimer -= 0.3f;
             }
 
             _speedTimer = 0f;
@@ -281,7 +282,6 @@ public class GameManager : MonoBehaviour
         feedbackcombocoroutine = null;
     }
 
-
     // reset score and ball position
     public void RestartGame()
     {
@@ -317,6 +317,16 @@ public class GameManager : MonoBehaviour
         activeBalls.Clear();
     }
 
+    private int MaxBalls()
+    {
+        return baseMaxBalls + (extraBallsPerTier * (Tier - 1));
+    }
+
+    private float RecoveryRate()
+    {
+        return baseRecoveryRate + (extraRecoveryPerTier *(Tier - 1));
+    }
+
     // currently unused. 
     // Reduces the number of active balls by a given percentage,
     // while ensuring that at least a minimum number of balls remain in the game.
@@ -338,5 +348,4 @@ public class GameManager : MonoBehaviour
             Destroy(removeBall);
         }
     }
-
 }
