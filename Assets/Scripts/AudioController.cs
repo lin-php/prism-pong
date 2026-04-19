@@ -6,9 +6,9 @@ public class AudioController : MonoBehaviour
 
     public static AudioController Instance;
 
-    public void SoundOnHit(AudioClip clip)
+    public void SoundOnHit(AudioClip clip, float volume)
     {
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(clip, volume);
     }
 
     private void Awake()

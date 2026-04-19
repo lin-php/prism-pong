@@ -6,6 +6,7 @@ public class BallController : MonoBehaviour
     [SerializeField] private GameManager gameManager;
 
     [SerializeField] private AudioClip paddleHit;
+    [SerializeField] private AudioClip paddleAiHit;
 
     private Rigidbody2D rb;
     private float targetSpeed;
@@ -42,7 +43,7 @@ public class BallController : MonoBehaviour
 
             rb.linearVelocity = directionHit * speed;
 
-            AudioController.Instance.SoundOnHit(paddleHit);
+            AudioController.Instance.SoundOnHit(paddleHit, 1f);
 
             gameManager.AddPlayerPointonPaddlehit();
 
@@ -59,6 +60,8 @@ public class BallController : MonoBehaviour
             directionHit = directionHit.normalized;
 
             rb.linearVelocity = directionHit * speed;
+
+            AudioController.Instance.SoundOnHit(paddleHit, 0.4f);
         }
     }
 

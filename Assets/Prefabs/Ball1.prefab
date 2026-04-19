@@ -172,3 +172,4 @@ MonoBehaviour:
   speed: 3
   gameManager: {fileID: 0}
   paddleHit: {fileID: 8300000, guid: f34556d8e6463034a852b8209682640f, type: 3}
+  paddleAiHit: {fileID: 8300000, guid: 34d8f90da9166a249aa4d5d464e9bb60, type: 3}

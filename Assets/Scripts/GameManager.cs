@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
             ShowFeedbackCombo("+" + streak + " EXCELLENT!");
             ShowFeedback("INSANE!");
             Tier++;
-            AudioController.Instance.SoundOnHit(EventSoundStreak);
+            AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
         }
         else if (streak % 15 == 0)
         {
