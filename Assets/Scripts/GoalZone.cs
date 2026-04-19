@@ -6,6 +6,9 @@ public class GoalZone : MonoBehaviour
     [SerializeField] private bool isLeftGoal;
     [SerializeField] private GameManager gameManager;
 
+    [SerializeField] private AudioClip goalPlayerZone;
+    [SerializeField] private AudioClip goalAiZone;
+
 
     // goal system with trigger
 
@@ -16,11 +19,12 @@ public class GoalZone : MonoBehaviour
             if (isLeftGoal)
             {
                 gameManager.AiGoalHit(collider.gameObject);
-
+                AudioController.Instance.SoundOnHit(goalPlayerZone);
             }
             else
             {
-                gameManager.AddPlayerPointonGoal(collider.gameObject);  
+                gameManager.AddPlayerPointonGoal(collider.gameObject); 
+                AudioController.Instance.SoundOnHit(goalAiZone);
             }
         }
     }

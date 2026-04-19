@@ -170,3 +170,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
   speed: 3
+  gameManager: {fileID: 0}
+  paddleHit: {fileID: 8300000, guid: f34556d8e6463034a852b8209682640f, type: 3}

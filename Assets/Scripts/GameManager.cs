@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float dangerRecoveryRate = 6f;
     [SerializeField] private float speedTimer = 20f;
 
+    [SerializeField] private AudioClip EventSoundStreak;
+
+    
     private string highScoreKey = "HighScore";
     private int highScore;
     private int score;
@@ -180,6 +183,7 @@ public class GameManager : MonoBehaviour
             ShowFeedbackCombo("+" + streak + " EXCELLENT!");
             ShowFeedback("INSANE!");
             Tier++;
+            AudioController.Instance.SoundOnHit(EventSoundStreak);
         }
         else if (streak % 15 == 0)
         {
