@@ -19,7 +19,7 @@ public class GoalZone : MonoBehaviour
             if (isLeftGoal)
             {
                 gameManager.AiGoalHit(collider.gameObject);
-                AudioController.Instance.SoundOnHit(goalPlayerZone, 0.7f);
+                AudioController.Instance.SoundOnHit(goalPlayerZone, 0.6f);
             }
             else
             {

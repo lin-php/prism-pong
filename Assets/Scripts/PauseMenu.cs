@@ -1,12 +1,23 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
 
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private Slider volumeSlider;
 
     private bool isPaused = false;
+
+
+    private void Awake()
+    {
+        float volume = PlayerPrefs.GetFloat("Volume", 0.5f);
+        AudioListener.volume = volume;
+        volumeSlider.value = volume;
+    }
 
     void Start()
     {
@@ -45,4 +56,17 @@ public class PauseMenu : MonoBehaviour
         ResumeGame();
         gameManager.RestartGame();
     }
+
+    public void SliderVolume(float volume)
+    {
+        volumeSlider.value = volume;
+        AudioListener.volume = volume;
+        PlayerPrefs.SetFloat("Volume", volume);
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
+
 }

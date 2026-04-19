@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     
     private string highScoreKey = "HighScore";
+    
     private int highScore;
     private int score;
     private int streak = 0;
@@ -56,12 +57,16 @@ public class GameManager : MonoBehaviour
         highScore = PlayerPrefs.GetInt(highScoreKey, 0);
         UpdateHighScoreUI();
 
-        aIPaddleController = AiPaddle.GetComponent<AIPaddleController>();
-
         timerball = 0f;
         UpdateScoreUI();
         Ball1Instantiate();
         aIPaddleController.SetBalls(activeBalls);
+    }
+    private void Awake()
+    {
+        float volume = PlayerPrefs.GetFloat("Volume", 0.5f);
+        AudioListener.volume = volume;
+        aIPaddleController = AiPaddle.GetComponent<AIPaddleController>();
     }
 
     private void Update()
@@ -333,4 +338,5 @@ public class GameManager : MonoBehaviour
             Destroy(removeBall);
         }
     }
+
 }
