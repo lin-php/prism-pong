@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     private AIPaddleController aIPaddleController;
 
     private List<GameObject> activeBalls = new List<GameObject>();  
+    private List<GameObject> deletingEvent = new List<GameObject>();
 
     // add points if goaled
     private void Start()
@@ -193,8 +194,9 @@ public class GameManager : MonoBehaviour
             ClearBalls();
             timerball = 0f;
             Ball1Instantiate();
-            ShowFeedbackCombo("+" + streak + " EXCELLENT!");
-            ShowFeedback("INSANE!");
+            ShowFeedbackCombo("+" + streak + " PERFECT!");
+            ShowFeedback("PERFECT!");
+            ReduceBalls(1f);
             Tier++;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
         }
@@ -227,8 +229,6 @@ public class GameManager : MonoBehaviour
 
         // player gets damage
         AddDamage(dangerPerMiss);
-
-        // ReduceBalls(0.3f);
 
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
@@ -265,7 +265,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator FeedbackRoutine()
     {
         FeedbackText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         FeedbackText.gameObject.SetActive(false);
         feedbackcoroutine = null;
     }
@@ -284,7 +284,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator FeedbackComboRoutine()
     {
         FeedbackTextCombo.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         FeedbackTextCombo.gameObject.SetActive(false);
         feedbackcombocoroutine = null;
     }
@@ -334,12 +334,14 @@ public class GameManager : MonoBehaviour
         return baseRecoveryRate + (extraRecoveryPerTier *(Tier - 1));
     }
 
-    // currently unused. 
+    
     // Reduces the number of active balls by a given percentage,
     // while ensuring that at least a minimum number of balls remain in the game.
     private void ReduceBalls(float percentage)
     {
-        int ballsToRemove = Mathf.FloorToInt(activeBalls.Count * percentage);
+        DeletingZone();
+
+        int ballsToRemove = Mathf.FloorToInt(deletingEvent.Count * percentage);
 
         int maxRemovable = activeBalls.Count - minBalls;
 
@@ -347,12 +349,29 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < ballsToRemove; i++)
         {
-            if (activeBalls.Count == 0) return;
+            if (deletingEvent.Count == 0) return;
 
-            GameObject removeBall = activeBalls[activeBalls.Count - 1];
+            GameObject removeBall = deletingEvent[deletingEvent.Count - 1];
 
+            deletingEvent.Remove(removeBall);
             activeBalls.Remove(removeBall);
             Destroy(removeBall);
         }
     }
+
+    private void DeletingZone()
+    {
+        deletingEvent.Clear();
+
+        foreach (GameObject ball in activeBalls)
+        {
+            Vector2 position = ball.transform.position;
+
+            if(position.x > -2.5f && position.x < 2.5f)
+            {
+                deletingEvent.Add(ball);
+            }
+        }
+    }
+
 }
