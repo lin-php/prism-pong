@@ -16,15 +16,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI FeedbackText;
     [SerializeField] private TextMeshProUGUI FeedbackTextCombo;
     [SerializeField] private GameObject GameOverPanel;
-    [SerializeField] private Slider DangerUI;
+    [SerializeField] private Slider HealthUI;
     [SerializeField] private GameObject ball1Prefab;
     [SerializeField] private float ball1Spawntimer = 7f;
     [SerializeField] private GameObject AiPaddle;
     [SerializeField] private int baseMaxBalls = 6;
     [SerializeField] private int minBalls = 2;
     [SerializeField] private int extraPoints = 100;
-    [SerializeField] private int maxDanger = 100;
-    [SerializeField] private int dangerPerMiss = 25;
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int dmgPerMiss = 25;
     [SerializeField] private float baseRecoveryRate = 5f;
     [SerializeField] private float extraRecoveryPerTier = 0.5f;
     [SerializeField] private float speedTimer = 30f;
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     private int extraBallsPerTier = 1;
     private float timerball;
     private int Tier = 1;
-    private float currentDanger;
+    private float currentHealth;
     private bool isGameOver = false;
     private float _speedTimer;
     private float currentSpeedBonus = 0;
@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     // add points if goaled
     private void Start()
     {
+        currentHealth = 100;
+        SliderDanger();
         highScore = PlayerPrefs.GetInt(highScoreKey, 0);
         UpdateHighScoreUI();
 
@@ -92,8 +94,8 @@ public class GameManager : MonoBehaviour
         }
 
         // recovery rate
-        currentDanger -= RecoveryRate() * Time.deltaTime;
-        currentDanger = Mathf.Clamp(currentDanger, 0f, maxDanger);
+        currentHealth += RecoveryRate() * Time.deltaTime;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         SliderDanger();
 
         // increase Ball Speed after increase play time; escalation system; increase spawntimer as well
@@ -121,10 +123,10 @@ public class GameManager : MonoBehaviour
     // player gets damage
     private void AddDamage(float amount)
     {
-        currentDanger += amount;
-        currentDanger = Mathf.Clamp(currentDanger, 0, maxDanger);
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         SliderDanger();
-        if (currentDanger >= maxDanger)
+        if (currentHealth >= maxHealth)
         {
             GameOver();
         }
@@ -132,7 +134,7 @@ public class GameManager : MonoBehaviour
 
     private void SliderDanger()
     {
-        DangerUI.value = currentDanger;
+        HealthUI.value = currentHealth;
     }
 
     // Game Over
@@ -191,12 +193,12 @@ public class GameManager : MonoBehaviour
         {
             score += (extraPoints + 100);
 
-            ClearBalls();
             timerball = 0f;
-            Ball1Instantiate();
-            ShowFeedbackCombo("+" + streak + " PERFECT!");
-            ShowFeedback("PERFECT!");
             ReduceBalls(1f);
+   
+            ShowFeedbackCombo("+" + streak + " PERFECT!");
+            ShowFeedback("PERFECT! CENTER CLEAR!");
+            
             Tier++;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
         }
@@ -228,7 +230,7 @@ public class GameManager : MonoBehaviour
         multiplier = 1;
 
         // player gets damage
-        AddDamage(dangerPerMiss);
+        AddDamage(dmgPerMiss);
 
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
@@ -294,7 +296,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         Time.timeScale = 1f;
-        currentDanger = 0f;
+        currentHealth = 100f;
         GameOverPanel.SetActive(false);
         SliderDanger();
         ClearBalls();
@@ -336,27 +338,29 @@ public class GameManager : MonoBehaviour
 
     
     // Reduces the number of active balls by a given percentage,
-    // while ensuring that at least a minimum number of balls remain in the game.
+    // destroy EVENT; each destroyed ball give +10 score
     private void ReduceBalls(float percentage)
     {
+        int destroyedBalls = 0;
         DeletingZone();
 
         int ballsToRemove = Mathf.FloorToInt(deletingEvent.Count * percentage);
-
         int maxRemovable = activeBalls.Count - minBalls;
-
         ballsToRemove = Mathf.Min(ballsToRemove, maxRemovable);
 
         for (int i = 0; i < ballsToRemove; i++)
         {
-            if (deletingEvent.Count == 0) return;
+            if (deletingEvent.Count == 0) break;
 
             GameObject removeBall = deletingEvent[deletingEvent.Count - 1];
-
+            
             deletingEvent.Remove(removeBall);
             activeBalls.Remove(removeBall);
             Destroy(removeBall);
+            destroyedBalls++;
         }
+        score += destroyedBalls * 10;
+        UpdateScoreUI();    
     }
 
     private void DeletingZone()
@@ -367,7 +371,7 @@ public class GameManager : MonoBehaviour
         {
             Vector2 position = ball.transform.position;
 
-            if(position.x > -2.5f && position.x < 2.5f)
+            if(position.x > -3f && position.x < 3f)
             {
                 deletingEvent.Add(ball);
             }
