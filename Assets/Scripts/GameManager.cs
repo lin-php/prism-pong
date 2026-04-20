@@ -377,5 +377,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
 }

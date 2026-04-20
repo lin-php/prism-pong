@@ -87,9 +87,10 @@ public class BallController : MonoBehaviour
         transform.position = Vector2.zero;
         rb.linearVelocity = Vector2.zero;   
 
-        float spawnY = Random.Range(-1.5f, 1.5f);
+        float spawnY = Random.Range(-1.6f, 1.6f);
+        int randomX = Random.value < 0.5f ? -1 : 1;
 
-        Vector2 direction = new Vector2(-1, spawnY);
+        Vector2 direction = new Vector2(randomX, spawnY);
 
         direction = direction.normalized;
 

@@ -289,10 +289,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 416781224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 752, y: -16}
-  m_SizeDelta: {x: 436.9, y: 60}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -227, y: -16}
+  m_SizeDelta: {x: 436.90002, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &31427053
 MonoBehaviour:
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1060,7 +1060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.57232696, g: 0, b: 0, a: 0.047058824}
+  m_Color: {r: 0.57232696, g: 0, b: 0, a: 0.13725491}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1633,10 +1633,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 416781224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 355, y: -77}
-  m_SizeDelta: {x: 436.9, y: 60}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -567, y: -77}
+  m_SizeDelta: {x: 436.90002, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &366865140
 GameObject:
@@ -1816,8 +1816,8 @@ RectTransform:
   - {fileID: 1045167828}
   - {fileID: 787346199}
   - {fileID: 270000071}
-  - {fileID: 997160759}
   - {fileID: 724112590}
+  - {fileID: 997160759}
   - {fileID: 1919686252}
   - {fileID: 829790201}
   m_Father: {fileID: 670189872}
@@ -2018,7 +2018,7 @@ Transform:
   m_GameObject: {fileID: 474974252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.67, y: 0.47832, z: 0}
+  m_LocalPosition: {x: 1.07, y: -0.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3049,10 +3049,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 416781224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 355, y: -16}
-  m_SizeDelta: {x: 436.9, y: 60}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -566, y: -16}
+  m_SizeDelta: {x: 436.90002, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &752762411
 GameObject:
@@ -3694,7 +3694,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.71383643, g: 1, b: 0.71983594, a: 1}
+    m_NormalColor: {r: 0.29874206, g: 1, b: 0.31795454, a: 1}
     m_HighlightedColor: {r: 0.68867916, g: 1, b: 0.69520605, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -3720,7 +3720,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 53.6
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3741,10 +3741,10 @@ RectTransform:
   - {fileID: 1082379881}
   m_Father: {fileID: 416781224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1771, y: -45}
-  m_SizeDelta: {x: 227.34, y: 20}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 149, y: -45}
+  m_SizeDelta: {x: 227.33997, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1045167825
 GameObject:
@@ -3878,9 +3878,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 416781224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 680, y: -228}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -320, y: -228}
   m_SizeDelta: {x: 582.53, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1082379880
@@ -4185,7 +4185,7 @@ MonoBehaviour:
   FeedbackText: {fileID: 1045167826}
   FeedbackTextCombo: {fileID: 787346197}
   GameOverPanel: {fileID: 829790200}
-  HealthUI: {fileID: 0}
+  HealthUI: {fileID: 997160758}
   ball1Prefab: {fileID: 3473320474470223006, guid: f91143a9424c2ef428e6a9f08de0dd04, type: 3}
   ball1Spawntimer: 7
   AiPaddle: {fileID: 235988132}
@@ -4194,10 +4194,10 @@ MonoBehaviour:
   extraPoints: 100
   maxHealth: 100
   dmgPerMiss: 25
-  baseRecoveryRate: 1
+  baseRecoveryRate: 0.7
   extraRecoveryPerTier: 0.5
   speedTimer: 30
-  increaseBallSpeed: 0.05
+  increaseBallSpeed: 0.04
   EventSoundStreak: {fileID: 8300000, guid: f5996aba92b156b4fbd98d92801e4193, type: 3}
 --- !u!1 &1397622771
 GameObject:
@@ -6121,6 +6121,18 @@ PrefabInstance:
     - target: {fileID: 9047686112940044174, guid: 1617e016e43e5c244a87ca8c8a87eb7b, type: 3}
       propertyPath: ball
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047686112940044174, guid: 1617e016e43e5c244a87ca8c8a87eb7b, type: 3}
+      propertyPath: deadzone
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047686112940044174, guid: 1617e016e43e5c244a87ca8c8a87eb7b, type: 3}
+      propertyPath: offsetRange
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047686112940044174, guid: 1617e016e43e5c244a87ca8c8a87eb7b, type: 3}
+      propertyPath: offsetChangeInterval
+      value: 3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
