@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float extraRecoveryPerTier = 0.5f;
     [SerializeField] private float speedTimer = 30f;
     [SerializeField] private float increaseBallSpeed = 0.10f;
+    [SerializeField] private float protectionDuration = 2f;
     [SerializeField] private AudioClip EventSoundStreak;
 
     
@@ -47,13 +48,15 @@ public class GameManager : MonoBehaviour
     private float currentSpeedBonus = 0;
     private Coroutine feedbackcoroutine;
     private Coroutine feedbackcombocoroutine;
+    private bool isProtected = false;
+    private Coroutine isprotectedcoroutine;
     
     private AIPaddleController aIPaddleController;
 
     private List<GameObject> activeBalls = new List<GameObject>();  
     private List<GameObject> deletingEvent = new List<GameObject>();
 
-    // add points if goaled
+    
     private void Start()
     {
         currentHealth = 100;
@@ -98,7 +101,7 @@ public class GameManager : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         SliderDanger();
 
-        // increase Ball Speed after increase play time; escalation system; increase spawntimer as well
+        // increase Ball Speed after increase play time; escalation system; decrease spawntimer as well
         _speedTimer += Time.deltaTime;
 
         if(_speedTimer >= speedTimer)
@@ -123,13 +126,24 @@ public class GameManager : MonoBehaviour
     // player gets damage
     private void AddDamage(float amount)
     {
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        SliderDanger();
-        if (currentHealth <= 0)
+        if (!isProtected)
         {
-            GameOver();
+            currentHealth -= amount;
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            SliderDanger();
+            if (currentHealth <= 0)
+            {
+                GameOver();
+            }
+            isProtected = true;
+            StartCoroutine(ProtectionCoroutine()); 
         }
+    }
+
+    private IEnumerator ProtectionCoroutine()
+    {
+        yield return new WaitForSeconds(protectionDuration);
+        isProtected = false;
     }
 
     private void SliderDanger()
@@ -226,11 +240,14 @@ public class GameManager : MonoBehaviour
 
     public void AiGoalHit(GameObject scoringBall)
     {
-        streak = 0;
-        multiplier = 1;
+        if (!isProtected)
+        {
+            streak = 0;
+            multiplier = 1;
 
-        // player gets damage
-        AddDamage(dmgPerMiss);
+            // player gets damage
+            AddDamage(dmgPerMiss);
+        }
 
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
