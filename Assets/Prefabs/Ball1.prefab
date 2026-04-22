@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad36142cfa03e284cbf5b22fdf4ccd31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
-  speed: 3
+  speed: 3.5
   gameManager: {fileID: 0}
   paddleHit: {fileID: 8300000, guid: f34556d8e6463034a852b8209682640f, type: 3}
   paddleAiHit: {fileID: 8300000, guid: 34d8f90da9166a249aa4d5d464e9bb60, type: 3}

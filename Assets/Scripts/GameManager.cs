@@ -29,7 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float baseRecoveryRate = 5f;
     [SerializeField] private float extraRecoveryPerTier = 0.5f;
     [SerializeField] private float speedTimer = 30f;
-    [SerializeField] private float increaseBallSpeed = 0.10f;
+    [SerializeField] private float increaseBallSpeed = 0.12f;
+    [SerializeField] private float maxSpeedBonus = 4.5f;
     [SerializeField] private float protectionDuration = 2f;
     [SerializeField] private AudioClip EventSoundStreak;
 
@@ -107,14 +108,17 @@ public class GameManager : MonoBehaviour
 
         if(_speedTimer >= speedTimer)
         {
-            foreach (GameObject ball in activeBalls) 
+            if (currentSpeedBonus < maxSpeedBonus)
             {
-                BallController ballController = ball.GetComponent<BallController>();
-                ballController.IncreaseBallSpeed(increaseBallSpeed);
+                foreach (GameObject ball in activeBalls)
+                {
+                    BallController ballController = ball.GetComponent<BallController>();
+                    ballController.IncreaseBallSpeed(increaseBallSpeed);
+                }
+
+                currentSpeedBonus += increaseBallSpeed;
             }
-
-            currentSpeedBonus += increaseBallSpeed;
-
+         
             if (ball1Spawntimer > 1f)
             {
                 ball1Spawntimer -= 0.2f;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    [SerializeField] private float speed = 4f;
+    [SerializeField] public float speed = 3.5f;
     [SerializeField] private GameManager gameManager;
 
     [SerializeField] private AudioClip paddleHit;
