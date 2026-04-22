@@ -49,8 +49,8 @@ public class GameManager : MonoBehaviour
     private Coroutine feedbackcoroutine;
     private Coroutine feedbackcombocoroutine;
     private bool isProtected = false;
-    private Coroutine isprotectedcoroutine;
-    
+    private float nextTierMilestone = 20;
+   
     private AIPaddleController aIPaddleController;
 
     private List<GameObject> activeBalls = new List<GameObject>();  
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
     // Event System
     private void Milestone()
     {
-        if (streak % 20 == 0)
+        if (streak >= nextTierMilestone)
         {
             score += (extraPoints + 100);
 
@@ -214,6 +214,7 @@ public class GameManager : MonoBehaviour
             ShowFeedback("PERFECT! CENTER CLEAR!");
             
             Tier++;
+            nextTierMilestone += 20;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
         }
         else if (streak % 15 == 0)
@@ -314,6 +315,7 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         Time.timeScale = 1f;
         currentHealth = 100f;
+        nextTierMilestone = 20;
         GameOverPanel.SetActive(false);
         SliderDanger();
         ClearBalls();
