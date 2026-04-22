@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         SliderDanger();
-        if (currentHealth >= maxHealth)
+        if (currentHealth <= 0)
         {
             GameOver();
         }
