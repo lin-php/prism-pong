@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     private int highScore;
     private int score;
     private int streak = 0;
-    private int multiplier = 1;
     private int extraBallsPerTier = 1;
     private float timerball;
     private int Tier = 1;
@@ -49,7 +48,7 @@ public class GameManager : MonoBehaviour
     private Coroutine feedbackcoroutine;
     private Coroutine feedbackcombocoroutine;
     private bool isProtected = false;
-    private float nextTierMilestone = 20;
+    private int nextTierMilestone = 20;
    
     private AIPaddleController aIPaddleController;
 
@@ -128,6 +127,8 @@ public class GameManager : MonoBehaviour
     {
         if (!isProtected)
         {
+            streak -= 5;
+            streak = Mathf.Max(0, streak);    
             currentHealth -= amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
@@ -181,9 +182,8 @@ public class GameManager : MonoBehaviour
 
     public void AddPlayerPointonGoal(GameObject scoringBall)
     {
-        score += multiplier;
         streak++;
-        multiplier = streak;
+        score += streak;
         UpdateScoreUI();
         Milestone();
         activeBalls.Remove(scoringBall);
@@ -194,8 +194,7 @@ public class GameManager : MonoBehaviour
     public void AddPlayerPointonPaddlehit()
     {
         streak++;
-        multiplier = streak;
-        score += multiplier;
+        score += streak;
         UpdateScoreUI();
         Milestone();
     }
@@ -243,9 +242,6 @@ public class GameManager : MonoBehaviour
     {
         if (!isProtected)
         {
-            streak = 0;
-            multiplier = 1;
-
             // player gets damage
             AddDamage(dmgPerMiss);
         }
@@ -313,6 +309,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         isGameOver = false;
+        isProtected = false;
         Time.timeScale = 1f;
         currentHealth = 100f;
         nextTierMilestone = 20;
@@ -320,7 +317,6 @@ public class GameManager : MonoBehaviour
         SliderDanger();
         ClearBalls();
         score = 0;
-        multiplier = 1;
         streak = 0;
         Tier = 1;
         UpdateScoreUI();
