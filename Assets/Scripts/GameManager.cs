@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
          
             if (ball1Spawntimer > 1f)
             {
-                ball1Spawntimer -= 0.2f;
+                ball1Spawntimer -= 0.6f;
             }
 
             _speedTimer = 0f;
@@ -340,6 +340,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         currentHealth = 100f;
         nextTierMilestone = 20;
+        currentSpeedBonus = 0;
+        _speedTimer = 0f;
         GameOverPanel.SetActive(false);
         SliderDanger();
         ClearBalls();
