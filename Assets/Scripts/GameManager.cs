@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI newHighScoreTextGameOver;
     [SerializeField] private TextMeshProUGUI FeedbackText;
     [SerializeField] private TextMeshProUGUI FeedbackTextCombo;
+    [SerializeField] private TextMeshProUGUI FeedbackTextComboDamage;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider HealthUI;
     [SerializeField] private GameObject ball1Prefab;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     private float currentSpeedBonus = 0;
     private Coroutine feedbackcoroutine;
     private Coroutine feedbackcombocoroutine;
+    private Coroutine feedbackdamagecoroutine;
     private bool isProtected = false;
     private int nextTierMilestone = 20;
    
@@ -132,6 +134,7 @@ public class GameManager : MonoBehaviour
             currentHealth -= amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
+            ShowFeedbackDamage("Streak -5");
             if (currentHealth <= 0)
             {
                 GameOver();
@@ -289,8 +292,8 @@ public class GameManager : MonoBehaviour
     private void ShowFeedbackCombo(string feedback)
     {
         FeedbackTextCombo.text = feedback;
-
-        if(feedbackcombocoroutine != null)
+       
+        if (feedbackcombocoroutine != null)
         {
             StopCoroutine(feedbackcombocoroutine);
         }
@@ -304,6 +307,26 @@ public class GameManager : MonoBehaviour
         FeedbackTextCombo.gameObject.SetActive(false);
         feedbackcombocoroutine = null;
     }
+
+    private void ShowFeedbackDamage(string feedback)
+    {
+        FeedbackTextComboDamage.text = feedback;
+
+        if (feedbackdamagecoroutine != null)
+        {
+            StopCoroutine(feedbackdamagecoroutine);
+        }
+        feedbackdamagecoroutine = StartCoroutine(FeedbackDamageRoutine());
+    }
+
+    private IEnumerator FeedbackDamageRoutine()
+    {
+        FeedbackTextComboDamage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        FeedbackTextComboDamage.gameObject.SetActive (false);
+        feedbackdamagecoroutine = null;
+    }
+
 
     // reset score and ball position
     public void RestartGame()
