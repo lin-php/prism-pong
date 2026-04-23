@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
     [SerializeField] private TextMeshProUGUI GameOverScoretext;
+    [SerializeField] private TextMeshProUGUI GameOverStreaktext;
+    [SerializeField] private TextMeshProUGUI GameOverTiertext;
     [SerializeField] private TextMeshProUGUI highScorePauseText;
     [SerializeField] private TextMeshProUGUI highScoreGameOverText;
     [SerializeField] private TextMeshProUGUI newHighScoreTextGameOver;
@@ -19,16 +21,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider HealthUI;
     [SerializeField] private GameObject ball1Prefab;
+    [Space(15)]
     [SerializeField] private float ball1Spawntimer = 7f;
     [SerializeField] private GameObject AiPaddle;
+    [Space(10)]
     [SerializeField] private int startBalls = 2;
     [SerializeField] private int minBalls = 2;
     [SerializeField] private int maxBalls = 6;
+    [Space(10)]
     [SerializeField] private int extraPoints = 100;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int dmgPerMiss = 25;
+    [Space(10)]
     [SerializeField] private float baseRecoveryRate = 5f;
     [SerializeField] private float extraRecoveryPerTier = 0.5f;
+    [Space(10)]
     [SerializeField] private float speedTimer = 30f;
     [SerializeField] private float increaseBallSpeed = 0.12f;
     [SerializeField] private float maxSpeedBonus = 4.5f;
@@ -268,6 +275,8 @@ public class GameManager : MonoBehaviour
         streakText.text = "Streak: " + streak.ToString();  
         TierUI.text = "Tier: " + Tier.ToString();
         GameOverScoretext.text = "Score: " + score.ToString();
+        GameOverTiertext.text = "Tier: " + Tier.ToString();
+        GameOverStreaktext.text = "Streak: " + streak.ToString();
     }
 
     private void UpdateHighScoreUI()
