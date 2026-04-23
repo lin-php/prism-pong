@@ -4189,17 +4189,18 @@ MonoBehaviour:
   GameOverPanel: {fileID: 829790200}
   HealthUI: {fileID: 997160758}
   ball1Prefab: {fileID: 3473320474470223006, guid: f91143a9424c2ef428e6a9f08de0dd04, type: 3}
-  ball1Spawntimer: 6.5
+  ball1Spawntimer: 7.6
   AiPaddle: {fileID: 235988132}
-  baseMaxBalls: 4
+  startBalls: 2
   minBalls: 2
+  maxBalls: 6
   extraPoints: 100
   maxHealth: 100
   dmgPerMiss: 25
   baseRecoveryRate: 0.4
-  extraRecoveryPerTier: 0.4
-  speedTimer: 30
-  increaseBallSpeed: 0.11
+  extraRecoveryPerTier: 0.01
+  speedTimer: 25
+  increaseBallSpeed: 0.1
   maxSpeedBonus: 4.5
   protectionDuration: 2
   EventSoundStreak: {fileID: 8300000, guid: f5996aba92b156b4fbd98d92801e4193, type: 3}

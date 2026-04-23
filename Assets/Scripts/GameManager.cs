@@ -21,8 +21,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ball1Prefab;
     [SerializeField] private float ball1Spawntimer = 7f;
     [SerializeField] private GameObject AiPaddle;
-    [SerializeField] private int baseMaxBalls = 6;
+    [SerializeField] private int startBalls = 2;
     [SerializeField] private int minBalls = 2;
+    [SerializeField] private int maxBalls = 6;
     [SerializeField] private int extraPoints = 100;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int dmgPerMiss = 25;
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
     private Coroutine feedbackdamagecoroutine;
     private bool isProtected = false;
     private int nextTierMilestone = 20;
-   
+    private float safeBallSpawnTimer;
     private AIPaddleController aIPaddleController;
 
     private List<GameObject> activeBalls = new List<GameObject>();  
@@ -61,7 +62,9 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        currentHealth = 100;
+        safeBallSpawnTimer = ball1Spawntimer;
+
+        currentHealth = maxHealth;
         SliderDanger();
         highScore = PlayerPrefs.GetInt(highScoreKey, 0);
         UpdateHighScoreUI();
@@ -119,9 +122,9 @@ public class GameManager : MonoBehaviour
                 currentSpeedBonus += increaseBallSpeed;
             }
          
-            if (ball1Spawntimer > 1f)
+            if (ball1Spawntimer > 1.3f)
             {
-                ball1Spawntimer -= 0.6f;
+                ball1Spawntimer -= 0.3f;
             }
 
             _speedTimer = 0f;
@@ -338,10 +341,11 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         isProtected = false;
         Time.timeScale = 1f;
-        currentHealth = 100f;
+        currentHealth = maxHealth;
         nextTierMilestone = 20;
         currentSpeedBonus = 0;
         _speedTimer = 0f;
+        ball1Spawntimer = safeBallSpawnTimer;
         GameOverPanel.SetActive(false);
         SliderDanger();
         ClearBalls();
@@ -372,7 +376,8 @@ public class GameManager : MonoBehaviour
 
     private int MaxBalls()
     {
-        return baseMaxBalls + (extraBallsPerTier * (Tier - 1));
+        int balls = startBalls + (extraBallsPerTier * (Tier - 1)); 
+        return Mathf.Min(balls, maxBalls);
     }
 
     private float RecoveryRate()
