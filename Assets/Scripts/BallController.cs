@@ -14,12 +14,14 @@ public class BallController : MonoBehaviour
     private float targetSpeed;
     private float newSpeed;
     private SpriteRenderer spriteRenderer;
+    private TrailRenderer trailRenderer;
 
     private Material currentMaterial;
     public Material CurrentMaterial { get { return currentMaterial; } }
 
     private void Awake()
     {
+        trailRenderer = GetComponent<TrailRenderer>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         rb = GetComponent<Rigidbody2D>(); 
@@ -126,5 +128,12 @@ public class BallController : MonoBehaviour
 
         currentMaterial = newMaterial;
         spriteRenderer.material = newMaterial;
+        trailRenderer.material = newMaterial;
+
+        //Color color = newMaterial.color;
+
+        //trailRenderer.startColor = color;
+        //trailRenderer.endColor = new Color(color.r, color.g, color.b, 0f);
+
     }
 }
