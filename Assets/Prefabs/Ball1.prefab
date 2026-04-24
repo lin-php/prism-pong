@@ -177,7 +177,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.899371, g: 0.8546188, b: 0.13858214, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -265,3 +265,10 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   paddleHit: {fileID: 8300000, guid: f34556d8e6463034a852b8209682640f, type: 3}
   paddleAiHit: {fileID: 8300000, guid: 34d8f90da9166a249aa4d5d464e9bb60, type: 3}
+  ballcolour:
+  - {fileID: 2100000, guid: 31cece25be0564941908674bdc87c3e2, type: 2}
+  - {fileID: 2100000, guid: e7a19c8b6b7e77c4fa2a204cde4e0aea, type: 2}
+  - {fileID: 2100000, guid: 0e8f161f3cf1b7c4c9c10f1aa610ee5f, type: 2}
+  - {fileID: 2100000, guid: 880bab861e1b44b41bf5f15052e2175a, type: 2}
+  - {fileID: 2100000, guid: 7267dfefb88b66f47a5f910b2dff8a0b, type: 2}
+  - {fileID: 2100000, guid: 86917550c0d241b4ea4dc19412e69d69, type: 2}

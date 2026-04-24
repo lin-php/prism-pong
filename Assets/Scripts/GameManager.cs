@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxSpeedBonus = 4.5f;
     [SerializeField] private float protectionDuration = 2f;
     [SerializeField] private AudioClip EventSoundStreak;
+    [Space(25)]
+    [SerializeField] private Material[] ballcolours;
 
     
     private string highScoreKey = "HighScore";
@@ -65,8 +67,7 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> activeBalls = new List<GameObject>();  
     private List<GameObject> deletingEvent = new List<GameObject>();
-
-    
+       
     private void Start()
     {
         safeBallSpawnTimer = ball1Spawntimer;
@@ -97,14 +98,8 @@ public class GameManager : MonoBehaviour
         // checks how many balls are ingame, will spawn more balls if place is available
 
         if (timerball >= ball1Spawntimer && activeBalls.Count < MaxBalls())
-        { 
-            GameObject ball1 = Instantiate(ball1Prefab);
-            BallController ball1Controller = ball1.GetComponent<BallController>();
-            ball1Controller.IncreaseBallSpeed(currentSpeedBonus);
-            ball1Controller.SpawnBall();
-            activeBalls.Add(ball1);
-
-            aIPaddleController.SetBalls(activeBalls);
+        {
+            Ball1Instantiate();
             timerball = 0f;
         }
 
@@ -191,10 +186,14 @@ public class GameManager : MonoBehaviour
 
     private void Ball1Instantiate()
     {
-        GameObject ball1 = Instantiate(ball1Prefab);    
-        BallController ball1Controller = ball1.GetComponent<BallController>();  
+        GameObject ball1 = Instantiate(ball1Prefab);
+        BallController ball1Controller = ball1.GetComponent<BallController>();
+        ball1Controller.IncreaseBallSpeed(currentSpeedBonus);
         ball1Controller.SpawnBall();
-        activeBalls.Add(ball1); 
+        activeBalls.Add(ball1);
+
+        aIPaddleController.SetBalls(activeBalls);
+
     }
 
     public void AddPlayerPointonGoal(GameObject scoringBall)

@@ -4,21 +4,30 @@ public class BallController : MonoBehaviour
 {
     [SerializeField] public float speed = 3.5f;
     [SerializeField] private GameManager gameManager;
-
+    [Space (20)]
     [SerializeField] private AudioClip paddleHit;
     [SerializeField] private AudioClip paddleAiHit;
+    [Space(20)]
+    [SerializeField] private Material[] ballcolour;
 
     private Rigidbody2D rb;
     private float targetSpeed;
     private float newSpeed;
+    private SpriteRenderer spriteRenderer;
+
+    private Material currentMaterial;
+    public Material CurrentMaterial { get { return currentMaterial; } }
 
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         rb = GetComponent<Rigidbody2D>(); 
         
         gameManager = FindFirstObjectByType<GameManager>();
 
         targetSpeed = speed;
+
     }
 
     public void IncreaseBallSpeed(float amount)
@@ -83,6 +92,9 @@ public class BallController : MonoBehaviour
     {
         // reset position -> middle of the field
         // set initial direction and apply velocity to the ball
+        // set random colour
+
+        SetRandomMaterial();    
 
         transform.position = Vector2.zero;
         rb.linearVelocity = Vector2.zero;   
@@ -96,5 +108,16 @@ public class BallController : MonoBehaviour
 
         rb.linearVelocity = direction * speed;
     }
+
+
+    // random colour on balls
+
+    private void SetRandomMaterial()
+    {
+        int index = Random.Range(0, ballcolour.Length);
+        spriteRenderer.material = ballcolour[index];    
+        currentMaterial = spriteRenderer.material;
+    }
+
 
 }
