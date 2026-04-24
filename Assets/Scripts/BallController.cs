@@ -55,6 +55,7 @@ public class BallController : MonoBehaviour
             AudioController.Instance.SoundOnHit(paddleHit, 1f);
 
             gameManager.AddPlayerPointonPaddlehit();
+            SetRandomMaterial();
 
         }
 
@@ -71,9 +72,9 @@ public class BallController : MonoBehaviour
             rb.linearVelocity = directionHit * speed;
 
             AudioController.Instance.SoundOnHit(paddleHit, 0.3f);
+            SetRandomMaterial();
         }
     }
-
 
     // acceleration if ball gets slowed
     private void FixedUpdate()
@@ -109,15 +110,21 @@ public class BallController : MonoBehaviour
         rb.linearVelocity = direction * speed;
     }
 
-
     // random colour on balls
 
     private void SetRandomMaterial()
     {
-        int index = Random.Range(0, ballcolour.Length);
-        spriteRenderer.material = ballcolour[index];    
-        currentMaterial = spriteRenderer.material;
+        Material newMaterial;
+
+        do
+        {
+            int index = Random.Range(0, ballcolour.Length);
+            newMaterial = ballcolour[index];
+
+        }
+        while (newMaterial == currentMaterial);
+
+        currentMaterial = newMaterial;
+        spriteRenderer.material = newMaterial;
     }
-
-
 }
