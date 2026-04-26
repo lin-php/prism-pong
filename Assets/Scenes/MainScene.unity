@@ -1543,7 +1543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 406, y: -17.3}
+  m_AnchoredPosition: {x: 406, y: -17.300049}
   m_SizeDelta: {x: 436.90002, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &270000072
@@ -3001,7 +3001,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 249, y: -17.3}
+  m_AnchoredPosition: {x: 249, y: -17.300049}
   m_SizeDelta: {x: 436.90002, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &724112591
@@ -4410,18 +4410,18 @@ MonoBehaviour:
   GameOverPanel: {fileID: 829790200}
   HealthUI: {fileID: 997160758}
   ball1Prefab: {fileID: 3473320474470223006, guid: f91143a9424c2ef428e6a9f08de0dd04, type: 3}
-  ball1Spawntimer: 7.6
+  ball1Spawntimer: 8
   AiPaddle: {fileID: 235988132}
   startBalls: 2
   minBalls: 2
   maxBalls: 6
   extraPoints: 100
   maxHealth: 100
-  dmgPerMiss: 25
+  dmgPerMiss: 22
   baseRecoveryRate: 0.4
   extraRecoveryPerTier: 0.01
   speedTimer: 25
-  increaseBallSpeed: 0.1
+  increaseBallSpeed: 0.08
   maxSpeedBonus: 4.5
   protectionDuration: 2
   EventSoundStreak: {fileID: 8300000, guid: f5996aba92b156b4fbd98d92801e4193, type: 3}
