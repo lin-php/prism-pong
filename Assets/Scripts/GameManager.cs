@@ -9,12 +9,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI streakText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
-    [SerializeField] private TextMeshProUGUI GameOverScoretext;
-    [SerializeField] private TextMeshProUGUI GameOverStreaktext;
-    [SerializeField] private TextMeshProUGUI GameOverTiertext;
+    [SerializeField] private GameObject GameOverNormalGroup;
+    [SerializeField] private TextMeshProUGUI GameOverNormalScoretext;
+    [SerializeField] private TextMeshProUGUI GameOverNormalStreaktext;
+    [SerializeField] private TextMeshProUGUI GameOverNormalTiertext;
+    [Space(15)]
     [SerializeField] private TextMeshProUGUI highScorePauseText;
     [SerializeField] private TextMeshProUGUI highScoreGameOverText;
-    [SerializeField] private TextMeshProUGUI newHighScoreTextGameOver;
+    [Space(15)]
+    [SerializeField] private GameObject GameOverNewHighScoreGroup;
+    [SerializeField] private TextMeshProUGUI GameOverNewScoretext;
+    [SerializeField] private TextMeshProUGUI GameOverNewStreaktext;
+    [SerializeField] private TextMeshProUGUI GameOverNewTiertext;
+    [Space(15)]
     [SerializeField] private TextMeshProUGUI FeedbackText;
     [SerializeField] private TextMeshProUGUI FeedbackTextCombo;
     [SerializeField] private TextMeshProUGUI FeedbackTextComboDamage;
@@ -170,16 +177,18 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0f;
         GameOverPanel.SetActive(true);
+        GameOverNormalGroup.SetActive(false);
+        GameOverNewHighScoreGroup.SetActive(false);
 
-        if(score > highScore)
+        if (score > highScore)
         {
             highScore = score;  
             PlayerPrefs.SetInt(highScoreKey, score);
-            newHighScoreTextGameOver.gameObject.SetActive(true);
+            GameOverNewHighScoreGroup.gameObject.SetActive(true);
         }
         else
         {
-            newHighScoreTextGameOver.gameObject.SetActive(false);
+            GameOverNormalGroup.gameObject.SetActive(true);
         }
             UpdateHighScoreUI();
     }
@@ -273,9 +282,12 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         streakText.text = "Streak: " + streak.ToString();  
         TierUI.text = "Tier: " + Tier.ToString();
-        GameOverScoretext.text = "Score: " + score.ToString();
-        GameOverTiertext.text = "Tier: " + Tier.ToString();
-        GameOverStreaktext.text = "Streak: " + streak.ToString();
+        GameOverNormalScoretext.text = "Score: " + score.ToString();
+        GameOverNormalTiertext.text = "Tier: " + Tier.ToString();
+        GameOverNormalStreaktext.text = "Streak: " + streak.ToString();
+        GameOverNewScoretext.text = "Score: " + score.ToString();
+        GameOverNewTiertext.text = "Tier: " + Tier.ToString();
+        GameOverNewStreaktext.text = "Streak: " + streak.ToString();
     }
 
     private void UpdateHighScoreUI()
@@ -364,7 +376,9 @@ public class GameManager : MonoBehaviour
         Ball1Instantiate();
         timerball = 0f;
         UpdateHighScoreUI();
-        newHighScoreTextGameOver.gameObject.SetActive(false);
+        GameOverNewHighScoreGroup.gameObject.SetActive(false);
+        GameOverNormalGroup.gameObject.SetActive(false);
+
     }
 
     public void QuitGame()
