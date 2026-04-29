@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b32c5e2cd3ea1814a901336e7f8fd048
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 307522
+  packageName: 50 Perlin Particle Textures Part 2
+  packageVersion: 1.0
+  assetPath: Assets/LuminaryLabs/PerlinTextures02/URP_Materials/PerlinParticle53_1024x1024_URP_Lit_Alpha.mat
+  uploadId: 722797
