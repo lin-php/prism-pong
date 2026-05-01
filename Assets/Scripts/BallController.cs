@@ -8,7 +8,7 @@ public class BallController : MonoBehaviour
     [SerializeField] private AudioClip paddleHit;
     [SerializeField] private AudioClip paddleAiHit;
     [Space(20)]
-    [SerializeField] private Material[] ballcolour;
+    [SerializeField] private Color[] ballColors;
 
     private Rigidbody2D rb;
     private float targetSpeed;
@@ -17,8 +17,8 @@ public class BallController : MonoBehaviour
     [SerializeField] private TrailRenderer trailRenderer;
     [SerializeField] private SpriteRenderer innerRenderer;
 
-    private Material currentMaterial;
-    public Material CurrentMaterial { get { return currentMaterial; } }
+    private Color currentColor;
+    public Color CurrentColor { get { return currentColor; } }
 
     private void Awake()
     {
@@ -114,20 +114,28 @@ public class BallController : MonoBehaviour
 
     private void SetRandomMaterial()
     {
-        Material newMaterial;
+        Color newColor;
 
         do
         {
-            int index = Random.Range(0, ballcolour.Length);
-            newMaterial = ballcolour[index];
+            int index = Random.Range(0, ballColors.Length);
+            newColor = ballColors[index];
 
         }
-        while (newMaterial == currentMaterial);
+        while (newColor == currentColor);
 
-        currentMaterial = newMaterial;
-        spriteRenderer.material = newMaterial;
-        trailRenderer.material = newMaterial;
-        innerRenderer.material = newMaterial;
+        currentColor = newColor;
+
+        spriteRenderer.material.color = newColor;
+        spriteRenderer.material.SetColor("_EmissionColor", newColor * 5f);
+
+        
+        innerRenderer.material.color = newColor;
+        innerRenderer.material.SetColor("_EmissionColor", newColor * 0.5f);
+
+        trailRenderer.startColor = newColor;
+
+
 
         //Color color = newMaterial.color;
 

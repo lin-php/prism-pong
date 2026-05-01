@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float protectionDuration = 2f;
     [SerializeField] private AudioClip EventSoundStreak;
     [Space(25)]
-    [SerializeField] private Material[] ballcolours;
+   
 
     
     private string highScoreKey = "HighScore";

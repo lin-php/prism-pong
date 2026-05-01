@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2854999234387672609}
   - component: {fileID: 3494249452645358893}
   - component: {fileID: 8447737665865993558}
+  - component: {fileID: 4015206861767098557}
   m_Layer: 3
   m_Name: InnerEnergy
   m_TagString: Untagged
@@ -27,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 3624198476186562073}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.002, y: -0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalPosition: {x: 0.01, y: -0, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9046866629027583108}
@@ -151,6 +152,19 @@ SpriteMask:
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
   m_MaskSource: 0
+--- !u!114 &4015206861767098557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624198476186562073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469522b860251e446ab65f581d7e9b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CircleRotate
+  speed: 40
 --- !u!1 &7896047839130298372
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +375,7 @@ GameObject:
   - component: {fileID: 6717081061355902136}
   - component: {fileID: 2784652454343712423}
   - component: {fileID: 6362451107272130190}
+  - component: {fileID: 2126284433172270270}
   m_Layer: 3
   m_Name: Ball2
   m_TagString: Ball
@@ -523,13 +538,13 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   paddleHit: {fileID: 8300000, guid: f34556d8e6463034a852b8209682640f, type: 3}
   paddleAiHit: {fileID: 8300000, guid: 34d8f90da9166a249aa4d5d464e9bb60, type: 3}
-  ballcolour:
-  - {fileID: 2100000, guid: f5b94cffa3dc85e42a2249848c2e20a9, type: 2}
-  - {fileID: 2100000, guid: bfde023594dd80a499d50de98d44d555, type: 2}
-  - {fileID: 2100000, guid: 7eb43a688036bb248b23a9a55c9b4950, type: 2}
-  - {fileID: 2100000, guid: 467dfe750bad45d4684c39e68df93672, type: 2}
-  - {fileID: 2100000, guid: bc9d69e7e007bab46a92bb116fa5e113, type: 2}
-  - {fileID: 2100000, guid: aef37447bf815bb4b90667f0a18e5504, type: 2}
+  ballColors:
+  - {r: 0, g: 0.3764706, b: 1, a: 1}
+  - {r: 0, g: 0.9764706, b: 1, a: 1}
+  - {r: 0.7137255, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0.42352942, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.61960787, a: 1}
+  - {r: 0.59607846, g: 0, b: 1, a: 1}
   spriteRenderer: {fileID: 202378909618875046}
   trailRenderer: {fileID: 1109530946452474724}
   innerRenderer: {fileID: 3494249452645358893}
@@ -546,3 +561,16 @@ SortingGroup:
   m_SortingOrder: 1
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
+--- !u!114 &2126284433172270270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8198619086938950776}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469522b860251e446ab65f581d7e9b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CircleRotate
+  speed: 5
