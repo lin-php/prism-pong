@@ -94,6 +94,9 @@ public class GameManager : MonoBehaviour
         float volume = PlayerPrefs.GetFloat("Volume", 0.5f);
         AudioListener.volume = volume;
         aIPaddleController = AiPaddle.GetComponent<AIPaddleController>();
+
+        AudioController.Instance.PlayGameTheme();
+
     }
 
     private void Update()
@@ -179,6 +182,8 @@ public class GameManager : MonoBehaviour
         GameOverPanel.SetActive(true);
         GameOverNormalGroup.SetActive(false);
         GameOverNewHighScoreGroup.SetActive(false);
+
+        AudioController.Instance.PlayHighScoreTheme();
 
         if (score > highScore)
         {
@@ -378,6 +383,8 @@ public class GameManager : MonoBehaviour
         UpdateHighScoreUI();
         GameOverNewHighScoreGroup.gameObject.SetActive(false);
         GameOverNormalGroup.gameObject.SetActive(false);
+
+        AudioController.Instance.PlayGameTheme();
 
     }
 

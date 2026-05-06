@@ -78,7 +78,7 @@ public class BallController : MonoBehaviour
 
             rb.linearVelocity = directionHit * speed;
 
-            AudioController.Instance.SoundOnHit(paddleHit, 0.3f);
+            AudioController.Instance.SoundOnHit(paddleHit, 0.5f);
             SetRandomMaterial();
         }
     }

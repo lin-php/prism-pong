@@ -9,17 +9,17 @@ public class StartMenuController : MonoBehaviour
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] Slider volumeSlider;
 
-    private string volume = "Volume";
-
-
+    
     private void Awake()
     {
+
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScoreText.text = "High Score: " + highScore.ToString();
 
         float volume = PlayerPrefs.GetFloat("Volume", 0.5f);
-        AudioListener.volume = volume;
         volumeSlider.value = volume;
+
+        AudioController.Instance.PlayMenuTheme();
 
     }
     public void StartGame()
