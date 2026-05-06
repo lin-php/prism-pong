@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BallController : MonoBehaviour
@@ -13,16 +14,22 @@ public class BallController : MonoBehaviour
     private Rigidbody2D rb;
     private float targetSpeed;
     private float newSpeed;
+
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private TrailRenderer trailRenderer;
     [SerializeField] private SpriteRenderer innerRenderer;
+    [SerializeField] private ParticleSystem _particleSystem;
+
+    private ParticleSystemRenderer particleRenderer;
 
     private Color currentColor;
     public Color CurrentColor { get { return currentColor; } }
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>(); 
+        rb = GetComponent<Rigidbody2D>();
+
+        particleRenderer = _particleSystem.GetComponent<ParticleSystemRenderer>(); 
         
         gameManager = FindFirstObjectByType<GameManager>();
 
@@ -115,10 +122,11 @@ public class BallController : MonoBehaviour
     private void SetRandomMaterial()
     {
         Color newColor;
+        int index;
 
         do
         {
-            int index = Random.Range(0, ballColors.Length);
+            index = Random.Range(0, ballColors.Length);
             newColor = ballColors[index];
 
         }
@@ -135,12 +143,27 @@ public class BallController : MonoBehaviour
 
         trailRenderer.startColor = newColor;
 
+        float particleEmission = 5.6f;
 
 
-        //Color color = newMaterial.color;
+        // manually adjust blue and purple particle emission because bloom/emission makes it looks wrong
+        if (index == 0) 
+        {
+            Color blueEmission = new Color32(0, 15, 191, 255);
+            particleRenderer.material.SetColor("_EmissionColor", blueEmission * 8f);
 
-        //trailRenderer.startColor = color;
-        //trailRenderer.endColor = new Color(color.r, color.g, color.b, 0f);
+        }
+        else if (index == 5)
+        {
+            Color purpleEmission = new Color32(29, 0, 191, 255);
+            particleRenderer.material.SetColor("_EmissionColor", purpleEmission * 8f);
+        }
+        else
+        {
+            particleRenderer.material.SetColor("_EmissionColor", newColor * particleEmission);
+        }
 
+        particleRenderer.material.color = newColor;
+        
     }
 }
