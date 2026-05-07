@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
        
     private void Start()
     {
+        streak += 19;
         safeBallSpawnTimer = ball1Spawntimer;
 
         currentHealth = maxHealth;
@@ -153,7 +154,7 @@ public class GameManager : MonoBehaviour
             currentHealth -= amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
-            ShowFeedbackDamage("Streak -5");
+            ShowFeedbackDamage("Bonus -5");
             if (currentHealth <= 0)
             {
                 GameOver();
@@ -240,11 +241,12 @@ public class GameManager : MonoBehaviour
             ReduceBalls(1f);
    
             ShowFeedbackCombo("+" + streak + " PERFECT!");
-            ShowFeedback("PERFECT! CENTER CLEAR!");
+            ShowFeedback("PRISM BURST!");
             
             Tier++;
             nextTierMilestone += 20;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
+            MiddleClearEvent.Instance.EventPlay();
         }
         else if (streak % 15 == 0)
         {
@@ -285,14 +287,14 @@ public class GameManager : MonoBehaviour
     private void UpdateScoreUI()
     {
         scoreText.text = "Score: " + score.ToString();
-        streakText.text = "Streak: " + streak.ToString();  
-        TierUI.text = "Tier: " + Tier.ToString();
+        streakText.text = "Bonus: " + streak.ToString();  
+        TierUI.text = "Level: " + Tier.ToString();
         GameOverNormalScoretext.text = "Score: " + score.ToString();
-        GameOverNormalTiertext.text = "Tier: " + Tier.ToString();
-        GameOverNormalStreaktext.text = "Streak: " + streak.ToString();
+        GameOverNormalTiertext.text = "Level: " + Tier.ToString();
+        GameOverNormalStreaktext.text = "Bonus: " + streak.ToString();
         GameOverNewScoretext.text = "Score: " + score.ToString();
-        GameOverNewTiertext.text = "Tier: " + Tier.ToString();
-        GameOverNewStreaktext.text = "Streak: " + streak.ToString();
+        GameOverNewTiertext.text = "Level: " + Tier.ToString();
+        GameOverNewStreaktext.text = "Bonus: " + streak.ToString();
     }
 
     private void UpdateHighScoreUI()
