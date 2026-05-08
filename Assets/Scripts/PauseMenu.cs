@@ -43,12 +43,14 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 0f;
         isPaused = true;
+        Cursor.visible = true;
         pausePanel.SetActive(true);
     }
     public void ResumeGame()
     {
         Time.timeScale = 1f;
         isPaused = false;
+        Cursor.visible = false;
         pausePanel.SetActive(false);
     }
     public void RestartGame()
@@ -67,6 +69,7 @@ public class PauseMenu : MonoBehaviour
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("StartMenu");
+        Cursor.visible = true;
     }
 
 }

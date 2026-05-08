@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
        
     private void Start()
     {
+        
         Tier = 1;
         streak += 0;
         safeBallSpawnTimer = ball1Spawntimer;
@@ -101,7 +102,7 @@ public class GameManager : MonoBehaviour
         aIPaddleController = AiPaddle.GetComponent<AIPaddleController>();
 
         AudioController.Instance.PlayGameTheme();
-
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -183,6 +184,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         isGameOver = true;
+        Cursor.visible = true;
         Time.timeScale = 0f;
         GameOverPanel.SetActive(true);
         GameOverNormalGroup.SetActive(false);
@@ -366,6 +368,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         isProtected = false;
+        Cursor.visible = false;
         Time.timeScale = 1f;
         currentHealth = maxHealth;
         nextTierMilestone = 15;
