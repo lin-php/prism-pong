@@ -15,5 +15,9 @@ public class ParticleDeath : MonoBehaviour
         particleRenderer.material.SetColor("_Emission", emissionColor);
     }
 
+    private void Start()
+    {
+        Destroy(gameObject, 3f);
+    }
 
 }

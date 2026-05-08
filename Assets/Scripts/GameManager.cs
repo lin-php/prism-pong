@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float ball1Spawntimer = 7f;
     [SerializeField] private GameObject AiPaddle;
     [Space(10)]
-    [SerializeField] private int startBalls = 2;
+    [SerializeField] private int startBalls = 3;
     [SerializeField] private int maxBalls = 6;
     [Space(10)]
     [SerializeField] private int extraPoints = 100;
@@ -153,12 +153,12 @@ public class GameManager : MonoBehaviour
     {
         if (!isProtected)
         {
-            streak -= 5;
+            streak -= 3;
             streak = Mathf.Max(0, streak);    
             currentHealth -= amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
-            ShowFeedbackDamage("Bonus -5");
+            ShowFeedbackDamage("Bonus -3");
             if (currentHealth <= 0)
             {
                 GameOver();
@@ -239,8 +239,7 @@ public class GameManager : MonoBehaviour
     {
         if (streak >= nextTierMilestone)
         {
-            score += (extraPoints + 50);
-
+            score += 100;
             currentHealth += 10;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
@@ -257,12 +256,10 @@ public class GameManager : MonoBehaviour
         }
         else if (streak % 10 == 0)
         {
-            score += extraPoints;
             ShowFeedbackCombo("+" + streak + " GREAT!");
         }
         else if (streak % 5 == 0)
         {
-            score += (extraPoints / 2);
             ShowFeedbackCombo("+" + streak + " GOOD!");
         }
         else
