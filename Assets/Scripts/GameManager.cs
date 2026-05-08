@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     private int highScore;
     private int score;
     private int streak = 0;
-    private int extraBallsPerTier = 1;
+    
     private float timerball;
     private int Tier = 1;
     private float currentHealth;
@@ -71,12 +71,12 @@ public class GameManager : MonoBehaviour
     private Coroutine feedbackcombocoroutine;
     private Coroutine feedbackdamagecoroutine;
     private bool isProtected = false;
-    private int nextTierMilestone = 20;
+    private int nextTierMilestone = 15;
     private float safeBallSpawnTimer;
     private AIPaddleController aIPaddleController;
 
     private List<GameObject> activeBalls = new List<GameObject>();  
-    private List<GameObject> deletingEvent = new List<GameObject>();
+    
        
     private void Start()
     {
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
                 currentSpeedBonus += increaseBallSpeed;
             }
          
-            if (ball1Spawntimer > 1.3f)
+            if (ball1Spawntimer > 1.6f)
             {
                 ball1Spawntimer -= 0.3f;
             }
@@ -239,22 +239,21 @@ public class GameManager : MonoBehaviour
     {
         if (streak >= nextTierMilestone)
         {
-            score += (extraPoints + 100);
+            score += (extraPoints + 50);
 
-            timerball = 0f;
+            currentHealth += 10;
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            SliderDanger();
+
+            timerball = ball1Spawntimer * 0.7f;
             StartCoroutine(ReduceBalls(1f));
    
             ShowFeedbackCombo("+" + streak + " PERFECT!");
-            ShowFeedback("PRISM BURST!");
+            ShowFeedback("Prism Clear!");
             
             Tier++;
-            nextTierMilestone += 20;
+            nextTierMilestone += 15;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
-        }
-        else if (streak % 15 == 0)
-        {
-            score += (extraPoints + 50);
-            ShowFeedbackCombo("+" + streak + " AWESOME!");
         }
         else if (streak % 10 == 0)
         {
@@ -372,7 +371,7 @@ public class GameManager : MonoBehaviour
         isProtected = false;
         Time.timeScale = 1f;
         currentHealth = maxHealth;
-        nextTierMilestone = 20;
+        nextTierMilestone = 15;
         currentSpeedBonus = 0;
         _speedTimer = 0f;
         ball1Spawntimer = safeBallSpawnTimer;
@@ -410,7 +409,8 @@ public class GameManager : MonoBehaviour
 
     private int MaxBalls()
     {
-        int balls = startBalls + (extraBallsPerTier * (Tier - 1)); 
+        int extraBalls = (Tier - 1) / 2;
+        int balls = startBalls + extraBalls;
         return Mathf.Min(balls, maxBalls);
     }
 
