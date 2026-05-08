@@ -167,4 +167,13 @@ public class BallController : MonoBehaviour
         particleRenderer.material.color = newColor;
         
     }
+    public Color ParticleColor
+    {
+        get { return particleRenderer.material.color; }
+    }
+    public Color ParticleEmissionColor
+    {
+        get { return particleRenderer.material.GetColor("_EmissionColor"); }
+    }
+
 }

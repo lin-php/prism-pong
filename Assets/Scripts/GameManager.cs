@@ -3,6 +3,7 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour
 {
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip EventSoundStreak;
     [Space(25)]
     [SerializeField] private GameObject ringPopEffect;
+    [SerializeField] private GameObject deathParticleEffect;
 
     private bool isMiddleClearRunning = false;
 
@@ -428,31 +430,39 @@ public class GameManager : MonoBehaviour
         isMiddleClearRunning = true;
 
         int destroyedBalls = 0;
-        DeletingZone();
 
-        int ballsToRemove = Mathf.FloorToInt(deletingEvent.Count * percentage);
-        
-        Debug.Log(ballsToRemove);
+        int ballsToRemove = Mathf.FloorToInt(activeBalls.Count * percentage);
+        List<GameObject> ballsToRemoveList = new List<GameObject>(activeBalls);
 
-        List<GameObject> ballsToRemoveList = new List<GameObject>(deletingEvent);
         MiddleClearEvent.Instance.EventPlay(ballsToRemoveList);
 
-        yield return new WaitForSecondsRealtime(0.8f);
+        yield return new WaitForSecondsRealtime(1.5f);
 
         for (int i = 0; i < ballsToRemove; i++)
         {
-            if (deletingEvent.Count == 0) break;
+            if (ballsToRemoveList.Count == 0) break;
 
-            GameObject removeBall = deletingEvent[deletingEvent.Count - 1];
-            
-            deletingEvent.Remove(removeBall);
-            activeBalls.Remove(removeBall);
-            Destroy(removeBall);
+            GameObject removeBall = ballsToRemoveList[ballsToRemoveList.Count - 1];
 
-            GameObject popRing = Instantiate(ringPopEffect, removeBall.transform.position, Quaternion.identity);
+            if (removeBall == null) 
+            {
+                ballsToRemoveList.Remove(removeBall);
+                continue;
+            }
+
             BallController ballcontroller = removeBall.GetComponent<BallController>();
+            GameObject popRing = Instantiate(ringPopEffect, removeBall.transform.position, Quaternion.identity);
             RingPopEffect ringEffect = popRing.GetComponent<RingPopEffect>();
+
+            GameObject deathBurst = Instantiate(deathParticleEffect, removeBall.transform.position, Quaternion.identity);
+            ParticleDeath particleEffect = deathBurst.GetComponent<ParticleDeath>();
+
+
+            ballsToRemoveList.Remove(removeBall);
+            activeBalls.Remove(removeBall);
             ringEffect.SetColor(ballcontroller.CurrentColor);
+            particleEffect.SetColor(ballcontroller.ParticleColor, ballcontroller.ParticleEmissionColor);
+            Destroy(removeBall);
 
             destroyedBalls++;
         }
@@ -461,6 +471,8 @@ public class GameManager : MonoBehaviour
         isMiddleClearRunning = false;
     }
 
+    // -> refactor; no deletingzone in the middle of field; all ball will be destroyed at event;
+    /* 
     private void DeletingZone()
     {
         deletingEvent.Clear();
@@ -474,5 +486,5 @@ public class GameManager : MonoBehaviour
                 deletingEvent.Add(ball);
             }
         }
-    }
+    }*/
 }
