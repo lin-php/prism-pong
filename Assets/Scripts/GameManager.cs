@@ -6,6 +6,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+    
     [SerializeField] private TextMeshProUGUI streakText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
@@ -33,7 +34,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject AiPaddle;
     [Space(10)]
     [SerializeField] private int startBalls = 2;
-    [SerializeField] private int minBalls = 2;
     [SerializeField] private int maxBalls = 6;
     [Space(10)]
     [SerializeField] private int extraPoints = 100;
@@ -49,9 +49,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float protectionDuration = 2f;
     [SerializeField] private AudioClip EventSoundStreak;
     [Space(25)]
-   
+    [SerializeField] private GameObject ringPopEffect;
 
-    
+    private bool isMiddleClearRunning = false;
+
     private string highScoreKey = "HighScore";
     
     private int highScore;
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
        
     private void Start()
     {
+        Tier = 3;
         streak += 19;
         safeBallSpawnTimer = ball1Spawntimer;
 
@@ -238,7 +240,7 @@ public class GameManager : MonoBehaviour
             score += (extraPoints + 100);
 
             timerball = 0f;
-            ReduceBalls(1f);
+            StartCoroutine(ReduceBalls(1f));
    
             ShowFeedbackCombo("+" + streak + " PERFECT!");
             ShowFeedback("PRISM BURST!");
@@ -246,7 +248,6 @@ public class GameManager : MonoBehaviour
             Tier++;
             nextTierMilestone += 20;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
-            MiddleClearEvent.Instance.EventPlay();
         }
         else if (streak % 15 == 0)
         {
@@ -266,6 +267,8 @@ public class GameManager : MonoBehaviour
         else
         {
             ShowFeedbackCombo("+" + streak);
+            StartCoroutine(ReduceBalls(1f));
+            AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
         }
         UpdateScoreUI();
     }
@@ -377,8 +380,8 @@ public class GameManager : MonoBehaviour
         SliderDanger();
         ClearBalls();
         score = 0;
-        streak = 0;
-        Tier = 1;
+        streak = 19;
+        Tier = 3;
         UpdateScoreUI();
         Ball1Instantiate();
         timerball = 0f;
@@ -419,14 +422,22 @@ public class GameManager : MonoBehaviour
     
     // Reduces the number of active balls by a given percentage,
     // destroy EVENT; each destroyed ball give +10 score
-    private void ReduceBalls(float percentage)
+    private IEnumerator ReduceBalls(float percentage)
     {
+        if (isMiddleClearRunning) yield break;
+        isMiddleClearRunning = true;
+
         int destroyedBalls = 0;
         DeletingZone();
 
         int ballsToRemove = Mathf.FloorToInt(deletingEvent.Count * percentage);
-        int maxRemovable = activeBalls.Count - minBalls;
-        ballsToRemove = Mathf.Min(ballsToRemove, maxRemovable);
+        
+        Debug.Log(ballsToRemove);
+
+        List<GameObject> ballsToRemoveList = new List<GameObject>(deletingEvent);
+        MiddleClearEvent.Instance.EventPlay(ballsToRemoveList);
+
+        yield return new WaitForSecondsRealtime(0.8f);
 
         for (int i = 0; i < ballsToRemove; i++)
         {
@@ -437,10 +448,17 @@ public class GameManager : MonoBehaviour
             deletingEvent.Remove(removeBall);
             activeBalls.Remove(removeBall);
             Destroy(removeBall);
+
+            GameObject popRing = Instantiate(ringPopEffect, removeBall.transform.position, Quaternion.identity);
+            BallController ballcontroller = removeBall.GetComponent<BallController>();
+            RingPopEffect ringEffect = popRing.GetComponent<RingPopEffect>();
+            ringEffect.SetColor(ballcontroller.CurrentColor);
+
             destroyedBalls++;
         }
         score += destroyedBalls * 10;
-        UpdateScoreUI();    
+        UpdateScoreUI();
+        isMiddleClearRunning = false;
     }
 
     private void DeletingZone()

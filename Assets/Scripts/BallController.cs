@@ -23,8 +23,9 @@ public class BallController : MonoBehaviour
     private ParticleSystemRenderer particleRenderer;
 
     private Color currentColor;
-    public Color CurrentColor { get { return currentColor; } }
+    public Color CurrentColor { get { return spriteRenderer.material.color; } }
 
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

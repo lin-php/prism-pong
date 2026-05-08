@@ -4054,10 +4054,9 @@ MonoBehaviour:
   GameOverPanel: {fileID: 829790200}
   HealthUI: {fileID: 997160758}
   ball1Prefab: {fileID: 8198619086938950776, guid: 6f16ff9849a78874b8226577f82f0b35, type: 3}
-  ball1Spawntimer: 8
+  ball1Spawntimer: 1
   AiPaddle: {fileID: 235988132}
-  startBalls: 2
-  minBalls: 2
+  startBalls: 6
   maxBalls: 6
   extraPoints: 100
   maxHealth: 100
@@ -4069,6 +4068,7 @@ MonoBehaviour:
   maxSpeedBonus: 4.5
   protectionDuration: 2
   EventSoundStreak: {fileID: 8300000, guid: f5996aba92b156b4fbd98d92801e4193, type: 3}
+  ringPopEffect: {fileID: 1348092512705501097, guid: f54c4158b2296704490205ace4d5572c, type: 3}
 --- !u!1 &1397622771
 GameObject:
   m_ObjectHideFlags: 0
