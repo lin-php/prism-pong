@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2939482765431573353}
   - component: {fileID: 30537108163987491}
   - component: {fileID: 9047686112940044174}
+  - component: {fileID: 7000766010361615459}
   m_Layer: 0
   m_Name: AiPaddle
   m_TagString: rechterPaddle
@@ -155,7 +156,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.99371064, g: 0.41560844, b: 0.41750497, a: 0.80784315}
@@ -180,7 +181,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIPaddleController
   speed: 6
-  offsetRange: 0.45
+  offsetRange: 0.44
   offsetChangeInterval: 3.5
-  deadzone: 0.35
+  deadzone: 0.34
   offsetSmoothSpeed: 0.9
+--- !u!95 &7000766010361615459
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3012829569768131599}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d8460d80d0296a4facfe6bd39989210, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

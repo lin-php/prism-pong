@@ -65,6 +65,13 @@ public class BallController : MonoBehaviour
             gameManager.AddPlayerPointonPaddlehit();
             SetRandomMaterial();
 
+            Animator paddleAnimator = collision.gameObject.GetComponent<Animator>();
+
+            if (paddleAnimator != null)
+            {
+                paddleAnimator.SetTrigger("PaddleHit");
+            }
+            
         }
 
         if (collision.gameObject.CompareTag("rechterPaddle"))
@@ -81,6 +88,13 @@ public class BallController : MonoBehaviour
 
             AudioController.Instance.SoundOnHit(paddleHit, 0.5f);
             SetRandomMaterial();
+
+            Animator paddleAnimator = collision.gameObject.GetComponent<Animator>();
+
+            if (paddleAnimator != null)
+            {
+                paddleAnimator.SetTrigger("PaddleHit");
+            }
         }
     }
 

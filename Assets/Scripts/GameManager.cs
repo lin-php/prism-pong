@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
        
     private void Start()
     {
-        Tier = 3;
-        streak += 19;
+        Tier = 1;
+        streak += 0;
         safeBallSpawnTimer = ball1Spawntimer;
 
         currentHealth = maxHealth;
@@ -269,8 +269,6 @@ public class GameManager : MonoBehaviour
         else
         {
             ShowFeedbackCombo("+" + streak);
-            StartCoroutine(ReduceBalls(1f));
-            AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
         }
         UpdateScoreUI();
     }
@@ -382,8 +380,8 @@ public class GameManager : MonoBehaviour
         SliderDanger();
         ClearBalls();
         score = 0;
-        streak = 19;
-        Tier = 3;
+        streak = 0;
+        Tier = 1;
         UpdateScoreUI();
         Ball1Instantiate();
         timerball = 0f;
