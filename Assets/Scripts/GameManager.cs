@@ -385,6 +385,7 @@ public class GameManager : MonoBehaviour
         Ball1Instantiate();
         timerball = 0f;
         UpdateHighScoreUI();
+        StopFeedbackUI();
         GameOverNewHighScoreGroup.gameObject.SetActive(false);
         GameOverNormalGroup.gameObject.SetActive(false);
 
@@ -467,6 +468,28 @@ public class GameManager : MonoBehaviour
         score += destroyedBalls * 10;
         UpdateScoreUI();
         isMiddleClearRunning = false;
+    }
+
+
+    private void StopFeedbackUI()
+    {
+        if (feedbackcoroutine != null)
+        {
+            StopCoroutine(feedbackcoroutine);
+            FeedbackText.gameObject.SetActive(false);
+        }
+
+        if (feedbackcombocoroutine != null)
+        {
+            StopCoroutine(feedbackcombocoroutine);
+            FeedbackTextCombo.gameObject.SetActive(false);
+        }
+
+        if (feedbackdamagecoroutine != null)
+        {
+            StopCoroutine(feedbackdamagecoroutine);
+            FeedbackTextComboDamage.gameObject.SetActive(false);
+        }
     }
 
     // -> refactor; no deletingzone in the middle of field; all ball will be destroyed at event;
