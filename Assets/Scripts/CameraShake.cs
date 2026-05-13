@@ -22,16 +22,14 @@ public class CameraShake : MonoBehaviour
         originalPosition = transform.localPosition;
     }
 
-    public void Shake()
+    public void Shake(float duration, float strength)
     {
-        StartCoroutine(ShakeRoutine());
+        StartCoroutine(ShakeRoutine(duration, strength));
     }
 
-    private IEnumerator ShakeRoutine()
+    private IEnumerator ShakeRoutine(float duration, float strength)
     {
-        float duration = 0.15f;
-        float strength = 0.15f;
-
+        
         float timer = 0f;
 
         while (timer < duration)

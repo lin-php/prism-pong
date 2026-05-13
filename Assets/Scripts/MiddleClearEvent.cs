@@ -24,7 +24,7 @@ public class MiddleClearEvent : MonoBehaviour
         }
 
         StartCoroutine(Flash());
-        CameraShake.Instance.Shake();
+        CameraShake.Instance.Shake(1.1f, 0.1f);
     }
 
     private IEnumerator BallImpactRoutine(GameObject ball)
