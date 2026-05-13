@@ -89,7 +89,7 @@ public class AIPaddleController : MonoBehaviour
      
         pos += direction * speed * Time.deltaTime;
 
-        float clampedY = Mathf.Clamp(pos, -4.5f, 4.5f);
+        float clampedY = Mathf.Clamp(pos, -4.35f, 4.35f);
 
         transform.position = new Vector2 (transform.position.x, clampedY);
 
