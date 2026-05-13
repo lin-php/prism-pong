@@ -20,11 +20,13 @@ public class GoalZone : MonoBehaviour
             {
                 gameManager.AiGoalHit(collider.gameObject);
                 AudioController.Instance.SoundOnHit(goalPlayerZone, 0.9f);
+                CameraShake.Instance.Shake(0.15f, 0.15f);
             }
             else
             {
                 gameManager.AddPlayerPointonGoal(collider.gameObject); 
                 AudioController.Instance.SoundOnHit(goalAiZone, 1f);
+                CameraShake.Instance.Shake(0.15f, 0.15f);
             }
         }
     }
