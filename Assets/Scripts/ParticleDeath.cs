@@ -12,7 +12,7 @@ public class ParticleDeath : MonoBehaviour
     public void SetColor(Color color, Color emissionColor)
     {
         particleRenderer.material.color = color;
-        particleRenderer.material.SetColor("_Emission", emissionColor);
+        particleRenderer.material.SetColor("_EmissionColor", emissionColor * 0.5f);
     }
 
     private void Start()

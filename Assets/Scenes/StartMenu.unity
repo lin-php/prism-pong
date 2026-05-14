@@ -1294,7 +1294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6349660004709496992, guid: 39151ba64ce792c42a475f43502b3f72, type: 3}
       propertyPath: m_text
-      value: Beta v.0.82 - a game by lin.php
+      value: Beta v.0.84 - a game by lin.php
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

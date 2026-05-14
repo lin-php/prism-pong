@@ -4317,6 +4317,8 @@ MonoBehaviour:
   gameManager: {fileID: 1280186410}
   goalPlayerZone: {fileID: 8300000, guid: f73d53b69f06a77438bab6b0f4addac2, type: 3}
   goalAiZone: {fileID: 8300000, guid: 62e377c408f5f76459bb82eecabddef7, type: 3}
+  goalBurstPrefab: {fileID: 8505663531585529482, guid: 427975afa3c8c734d9746946b011e89e, type: 3}
+  goalBurstRotation: {x: 0, y: 0, z: -180}
 --- !u!61 &1397622774
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5399,6 +5401,8 @@ MonoBehaviour:
   gameManager: {fileID: 1280186410}
   goalPlayerZone: {fileID: 8300000, guid: f73d53b69f06a77438bab6b0f4addac2, type: 3}
   goalAiZone: {fileID: 8300000, guid: 62e377c408f5f76459bb82eecabddef7, type: 3}
+  goalBurstPrefab: {fileID: 8505663531585529482, guid: 427975afa3c8c734d9746946b011e89e, type: 3}
+  goalBurstRotation: {x: 0, y: 0, z: 0}
 --- !u!61 &1886340167
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -8,7 +8,8 @@ public class GoalZone : MonoBehaviour
 
     [SerializeField] private AudioClip goalPlayerZone;
     [SerializeField] private AudioClip goalAiZone;
-
+    [SerializeField] private GameObject goalBurstPrefab;
+    [SerializeField] private Vector3 goalBurstRotation;
 
     // goal system with trigger
 
@@ -16,6 +17,12 @@ public class GoalZone : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Ball"))
         {
+
+            BallController ballcontroller = collider.GetComponent<BallController>();
+            GameObject goalBurst = Instantiate(goalBurstPrefab, collider.transform.position, Quaternion.Euler(goalBurstRotation));
+            ParticleDeath particleEffect = goalBurst.GetComponent<ParticleDeath>();
+            particleEffect.SetColor(ballcontroller.ParticleColor, ballcontroller.ParticleEmissionColor);
+
             if (isLeftGoal)
             {
                 gameManager.AiGoalHit(collider.gameObject);
