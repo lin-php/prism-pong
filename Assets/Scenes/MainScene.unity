@@ -3221,6 +3221,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f40a29f798743a246b36ceb89c534fbc, type: 3}
+--- !u!114 &931796985 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8132667167889631007, guid: f40a29f798743a246b36ceb89c534fbc, type: 3}
+  m_PrefabInstance: {fileID: 931796984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
 --- !u!1 &937772737
 GameObject:
   m_ObjectHideFlags: 0
@@ -4199,6 +4210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1280186409}
   - component: {fileID: 1280186410}
+  - component: {fileID: 1280186411}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4268,6 +4280,20 @@ MonoBehaviour:
   EventSoundStreak: {fileID: 8300000, guid: f5996aba92b156b4fbd98d92801e4193, type: 3}
   ringPopEffect: {fileID: 1348092512705501097, guid: f54c4158b2296704490205ace4d5572c, type: 3}
   deathParticleEffect: {fileID: 8505663531585529482, guid: 03adafca73f0ec4409f1a3e1147320c4, type: 3}
+  damageVignette: {fileID: 1280186411}
+--- !u!114 &1280186411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280186408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ce5e88b2d452c4aac998e04876abbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageVignette
+  volume: {fileID: 931796985}
 --- !u!1 &1397622771
 GameObject:
   m_ObjectHideFlags: 0

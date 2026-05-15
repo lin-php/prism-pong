@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     [Space(25)]
     [SerializeField] private GameObject ringPopEffect;
     [SerializeField] private GameObject deathParticleEffect;
+    [SerializeField] private DamageVignette damageVignette;
 
     private bool isMiddleClearRunning = false;
 
@@ -112,6 +113,7 @@ public class GameManager : MonoBehaviour
         {
             streak = nextTierMilestone;
             Milestone();
+            damageVignette.PlayDamageVignette();
         }
 
         if (isGameOver) return;
