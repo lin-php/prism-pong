@@ -20,7 +20,11 @@ public class BallController : MonoBehaviour
     [SerializeField] private SpriteRenderer innerRenderer;
     [SerializeField] private ParticleSystem _particleSystem;
 
+
     private ParticleSystemRenderer particleRenderer;
+    private Animator animator;
+    private Vector2 lastVelocity;
+    
 
     private Color currentColor;
     public Color CurrentColor { get { return spriteRenderer.material.color; } }
@@ -29,9 +33,10 @@ public class BallController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
-        particleRenderer = _particleSystem.GetComponent<ParticleSystemRenderer>(); 
-        
+        particleRenderer = _particleSystem.GetComponent<ParticleSystemRenderer>();
+
         gameManager = FindFirstObjectByType<GameManager>();
 
         targetSpeed = speed;
@@ -46,8 +51,22 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // calculate bounce direction based on hit position
 
+        // only play wall hit animation if the ball has enough vertical speed.
+        // prevents animation spam while sliding along the wall.
+        if (collision.gameObject.CompareTag("Wall"))
+        { 
+            if (Mathf.Abs(lastVelocity.y) > 1f)
+            {
+                animator.SetTrigger("BallHit");
+            }
+        }
+        else
+        {
+            animator.SetTrigger("BallHit");
+        }
+
+        // calculate bounce direction based on hit position
         if (collision.gameObject.CompareTag("linkerPaddle"))
         {
             float paddleY = collision.gameObject.transform.position.y;
@@ -71,7 +90,7 @@ public class BallController : MonoBehaviour
             {
                 paddleAnimator.SetTrigger("PaddleHit");
             }
-            
+
         }
 
         if (collision.gameObject.CompareTag("rechterPaddle"))
@@ -102,6 +121,8 @@ public class BallController : MonoBehaviour
     private void FixedUpdate()
     {
         float currentSpeed = rb.linearVelocity.magnitude;
+
+        lastVelocity = rb.linearVelocity;
 
         if (currentSpeed < targetSpeed)
         {
