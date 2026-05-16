@@ -12,7 +12,7 @@ public class StartMenuController : MonoBehaviour
     
     private void Awake()
     {
-
+        Time.timeScale = 1f;
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScoreText.text = "High Score: " + highScore.ToString();
 
