@@ -49,4 +49,15 @@ public class DamageVignette : MonoBehaviour
         vignetteCoroutine = null;
     }
 
+    public void StopDamageVignette()
+    {
+        if (vignetteCoroutine != null)
+        {
+            StopCoroutine(vignetteCoroutine);
+        }
+
+        vignette.active = false;
+       
+    }
+
 }

@@ -113,7 +113,6 @@ public class GameManager : MonoBehaviour
         {
             streak = nextTierMilestone;
             Milestone();
-            damageVignette.PlayDamageVignette();
         }
 
         if (isGameOver) return;
@@ -169,6 +168,8 @@ public class GameManager : MonoBehaviour
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
             ShowFeedbackDamage("Bonus -3");
+            damageVignette.PlayDamageVignette();
+
             if (currentHealth <= 0)
             {
                 GameOver();
@@ -499,6 +500,8 @@ public class GameManager : MonoBehaviour
             StopCoroutine(feedbackdamagecoroutine);
             FeedbackTextComboDamage.gameObject.SetActive(false);
         }
+
+        damageVignette.StopDamageVignette();
     }
 
     // -> refactor; no deletingzone in the middle of field; all ball will be destroyed at event;
