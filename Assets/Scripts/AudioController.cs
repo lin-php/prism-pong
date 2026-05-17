@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using System.Collections;
 
 public class AudioController : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class AudioController : MonoBehaviour
 
     public void PlayMenuTheme()
     {
-        PlayMusic(menuTheme, true, 0.03f);
+        PlayMusic(menuTheme, true, 0.04f);
     }
 
     public void PlayGameTheme()
@@ -45,7 +46,7 @@ public class AudioController : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            float volume = PlayerPrefs.GetFloat("Volume", 0.5f);
+            float volume = PlayerPrefs.GetFloat("Volume", 0.7f);
             AudioListener.volume = volume;
         }
         else 

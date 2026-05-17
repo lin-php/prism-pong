@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +13,7 @@ public class StartMenuController : MonoBehaviour
 
     private AsyncOperation asyncLoad;
     private bool isLoading = false;
+    private float targetVolume;
 
     private void Awake()
     {
@@ -21,12 +21,20 @@ public class StartMenuController : MonoBehaviour
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScoreText.text = "High Score: " + highScore.ToString();
 
-        float volume = PlayerPrefs.GetFloat("Volume", 0.5f);
+        float volume = PlayerPrefs.GetFloat("Volume", 0.7f);
         volumeSlider.value = volume;
 
-        AudioController.Instance.PlayMenuTheme();
+        targetVolume = volume;
+        AudioListener.volume = 0f;
 
+        AudioController.Instance.PlayMenuTheme();
     }
+
+    private void Start()
+    {
+        StartCoroutine(FadeAudioIn());
+    }
+
 
     public void StartGame()
     {
@@ -38,6 +46,7 @@ public class StartMenuController : MonoBehaviour
     public void SliderVolume(float volume)
     {
         volumeSlider.value = volume;
+        targetVolume = volume;
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("Volume", volume);
     }
@@ -57,6 +66,17 @@ public class StartMenuController : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);
 
         asyncLoad.allowSceneActivation = true;
+    }
+
+    private IEnumerator FadeAudioIn()
+    {
+        while (AudioListener.volume < targetVolume)
+        {
+            AudioListener.volume += Time.deltaTime * 0.8f;
+            yield return null;
+        }
+
+        AudioListener.volume = targetVolume;    
     }
 
 }
