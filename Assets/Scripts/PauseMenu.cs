@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Slider volumeSlider;
+    [SerializeField] private DamageVignette damageVignette;
 
     private bool isPaused = false;
 
@@ -45,6 +46,7 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
         Cursor.visible = true;
         pausePanel.SetActive(true);
+        damageVignette.StopDamageVignette();
     }
     public void ResumeGame()
     {

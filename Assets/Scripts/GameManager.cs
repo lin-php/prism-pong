@@ -199,6 +199,7 @@ public class GameManager : MonoBehaviour
         GameOverPanel.SetActive(true);
         GameOverNormalGroup.SetActive(false);
         GameOverNewHighScoreGroup.SetActive(false);
+        StopFeedbackUI();
 
         AudioController.Instance.PlayHighScoreTheme();
 
