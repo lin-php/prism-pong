@@ -1,5 +1,7 @@
-using UnityEngine;
+using System.Collections;
+using System.Threading;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -8,8 +10,11 @@ public class StartMenuController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] Slider volumeSlider;
+    [SerializeField] private Animator screenFade;
 
-    
+    private AsyncOperation asyncLoad;
+    private bool isLoading = false;
+
     private void Awake()
     {
         Time.timeScale = 1f;
@@ -22,9 +27,12 @@ public class StartMenuController : MonoBehaviour
         AudioController.Instance.PlayMenuTheme();
 
     }
+
     public void StartGame()
     {
-        SceneManager.LoadScene("MainScene");
+        if (isLoading) return;
+        isLoading = true;
+        StartCoroutine(StartGameTransition());
     }
 
     public void SliderVolume(float volume)
@@ -37,6 +45,18 @@ public class StartMenuController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private IEnumerator StartGameTransition()
+    {
+        screenFade.SetTrigger("FadeOut");
+
+        asyncLoad = SceneManager.LoadSceneAsync("MainScene");
+        asyncLoad.allowSceneActivation = false;
+
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        asyncLoad.allowSceneActivation = true;
     }
 
 }
