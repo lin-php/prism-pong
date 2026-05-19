@@ -72,7 +72,7 @@ public class StartMenuController : MonoBehaviour
     {
         while (AudioListener.volume < targetVolume)
         {
-            AudioListener.volume += Time.deltaTime * 0.8f;
+            AudioListener.volume += Time.deltaTime * 0.85f;
             yield return null;
         }
 

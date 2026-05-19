@@ -108,12 +108,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // Event Test
+         // Event Test
         if (Input.GetKeyDown(KeyCode.K))
         {
             streak = nextTierMilestone;
             Milestone();
-        }
+        } 
 
         if (isGameOver) return;
 
@@ -262,7 +262,10 @@ public class GameManager : MonoBehaviour
    
             ShowFeedbackCombo("+" + streak + " PERFECT!");
             ShowFeedback("Prism Clear!");
-            
+
+            isProtected = true;
+            StartCoroutine(ProtectionCoroutine());
+
             Tier++;
             nextTierMilestone += 15;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
