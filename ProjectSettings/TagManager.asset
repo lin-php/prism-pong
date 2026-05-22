@@ -9,6 +9,7 @@ TagManager:
   - linkerPaddle
   - Ball
   - Wall
+  - Deathparticle
   layers:
   - Default
   - TransparentFX

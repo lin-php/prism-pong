@@ -2943,6 +2943,8 @@ GameObject:
   - component: {fileID: 829790201}
   - component: {fileID: 829790203}
   - component: {fileID: 829790202}
+  - component: {fileID: 829790205}
+  - component: {fileID: 829790204}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -3016,6 +3018,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829790200}
   m_CullTransparentMesh: 1
+--- !u!225 &829790204
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829790200}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!95 &829790205
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829790200}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: af891b2d1bedd5148a10e8ea69ef1af2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &842003277
 GameObject:
   m_ObjectHideFlags: 0
@@ -3934,7 +3970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7877169480632383806, guid: 0ea973eb239d65d47bb1153aacfbf5fc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 48.999947
+      value: 48.99994
       objectReference: {fileID: 0}
     - target: {fileID: 7877169480632383806, guid: 0ea973eb239d65d47bb1153aacfbf5fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5046,7 +5082,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1715555144
 Transform:
   m_ObjectHideFlags: 0
@@ -6163,6 +6199,7 @@ GameObject:
   - component: {fileID: 2014510784}
   - component: {fileID: 2014510783}
   - component: {fileID: 2014510782}
+  - component: {fileID: 2014510785}
   m_Layer: 5
   m_Name: NewHighScoreText
   m_TagString: Untagged
@@ -6289,6 +6326,28 @@ RectTransform:
   m_AnchoredPosition: {x: -7.3813133, y: 2.7099915}
   m_SizeDelta: {x: 519.31, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &2014510785
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014510781}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5ba0cf2d87cb28042a9970c1651618e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2037119609
 GameObject:
   m_ObjectHideFlags: 0

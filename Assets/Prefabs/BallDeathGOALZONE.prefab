@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3889092814375742054}
   m_Layer: 0
   m_Name: BallDeathGOALZONE
-  m_TagString: Untagged
+  m_TagString: Deathparticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

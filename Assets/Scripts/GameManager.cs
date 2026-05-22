@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     private bool isMiddleClearRunning = false;
 
-    private string highScoreKey = "HighScore";
+    private string highScoreKey = "HighScore7";
     
     private int highScore;
     private int score;
@@ -108,12 +108,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-         // Event Test
+        /* // Event Test
         if (Input.GetKeyDown(KeyCode.K))
         {
             streak = nextTierMilestone;
             Milestone();
-        } 
+        } */
 
         if (isGameOver) return;
 
@@ -193,19 +193,37 @@ public class GameManager : MonoBehaviour
     // Game Over
     private void GameOver()
     {
+        if (isGameOver) return;
+
         isGameOver = true;
-        Cursor.visible = true;
+        StartCoroutine(GameOverRoutine());
+
+    }
+
+    private IEnumerator GameOverRoutine()
+    {
+        float timer = 0f;
+        float duration = 2f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.Lerp(1f, 0.1f, timer / duration);
+            yield return null;
+        }
+        
         Time.timeScale = 0f;
+        
         GameOverPanel.SetActive(true);
         GameOverNormalGroup.SetActive(false);
         GameOverNewHighScoreGroup.SetActive(false);
-        StopFeedbackUI();
 
         AudioController.Instance.PlayHighScoreTheme();
+        
 
         if (score > highScore)
         {
-            highScore = score;  
+            highScore = score;
             PlayerPrefs.SetInt(highScoreKey, score);
             GameOverNewHighScoreGroup.gameObject.SetActive(true);
         }
@@ -213,7 +231,16 @@ public class GameManager : MonoBehaviour
         {
             GameOverNormalGroup.gameObject.SetActive(true);
         }
-            UpdateHighScoreUI();
+
+        UpdateHighScoreUI();
+        Cursor.visible = true;
+        StopFeedbackUI();
+
+        GameObject[] deathParticles = GameObject.FindGameObjectsWithTag("Deathparticle");
+        foreach (GameObject deathParticle in deathParticles)
+        {
+            Destroy(deathParticle);
+        }
     }
 
     private void Ball1Instantiate()
