@@ -8,7 +8,7 @@ using UnityEngine.Analytics;
 public class GameManager : MonoBehaviour
 {
     
-    [SerializeField] private TextMeshProUGUI streakText;
+    [SerializeField] private TextMeshProUGUI nextPrismText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
     [SerializeField] private GameObject GameOverNormalGroup;
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     private bool isMiddleClearRunning = false;
 
-    private string highScoreKey = "HighScore7";
+    private string highScoreKey = "HighScore10";
     
     private int highScore;
     private int score;
@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
             currentHealth -= amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
-            ShowFeedbackDamage("Bonus -3");
+            ShowFeedbackDamage("-3");
             damageVignette.PlayDamageVignette();
 
             if (currentHealth <= 0)
@@ -328,8 +328,11 @@ public class GameManager : MonoBehaviour
     // UI Score update
     private void UpdateScoreUI()
     {
-        scoreText.text = "Score: " + score.ToString();
-        streakText.text = "Bonus: " + streak.ToString();  
+        int hitsUntilPrism = nextTierMilestone - streak;
+        hitsUntilPrism = Mathf.Max(0, hitsUntilPrism);
+
+        scoreText.text = score.ToString();
+        nextPrismText.text = "Prism: " + hitsUntilPrism.ToString();  
         TierUI.text = "Level: " + Tier.ToString();
         GameOverNormalScoretext.text = "Score: " + score.ToString();
         GameOverNormalTiertext.text = "Level: " + Tier.ToString();
