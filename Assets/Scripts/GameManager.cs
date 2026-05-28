@@ -7,7 +7,8 @@ using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour
 {
-    
+    [SerializeField] private Transform canvasTransform;
+    [SerializeField] private GameObject floatingDamagePrefab;
     [SerializeField] private TextMeshProUGUI nextPrismText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
@@ -169,6 +170,8 @@ public class GameManager : MonoBehaviour
             SliderDanger();
             ShowFeedbackDamage("-3");
             damageVignette.PlayDamageVignette();
+            GameObject damageText = Instantiate(floatingDamagePrefab, canvasTransform);
+            damageText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2f, 82f);
 
             if (currentHealth <= 0)
             {
