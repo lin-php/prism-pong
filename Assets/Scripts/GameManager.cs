@@ -260,10 +260,9 @@ public class GameManager : MonoBehaviour
 
     public void AddPlayerPointonGoal(GameObject scoringBall)
     {
-        streak++;
         score += streak;
         UpdateScoreUI();
-        Milestone();
+
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
         ShowFeedback("GOAL!");
