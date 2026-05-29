@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     [Space(15)]
     [SerializeField] private TextMeshProUGUI FeedbackText;
     [SerializeField] private TextMeshProUGUI FeedbackTextCombo;
-    [SerializeField] private TextMeshProUGUI FeedbackTextComboDamage;
+    
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider HealthUI;
     [SerializeField] private GameObject ball1Prefab;
@@ -71,7 +71,6 @@ public class GameManager : MonoBehaviour
     private float currentSpeedBonus = 0;
     private Coroutine feedbackcoroutine;
     private Coroutine feedbackcombocoroutine;
-    private Coroutine feedbackdamagecoroutine;
     private bool isProtected = false;
     private int nextTierMilestone = 15;
     private float safeBallSpawnTimer;
@@ -159,7 +158,7 @@ public class GameManager : MonoBehaviour
     }
 
     // player gets damage
-    private void AddDamage(float amount)
+    private void AddDamage(float amount, float uiY)
     {
         if (!isProtected)
         {
@@ -168,10 +167,10 @@ public class GameManager : MonoBehaviour
             currentHealth -= amount;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
-            ShowFeedbackDamage("-3");
             damageVignette.PlayDamageVignette();
+
             GameObject damageText = Instantiate(floatingDamagePrefab, canvasTransform);
-            damageText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2f, 82f);
+            damageText.GetComponent<RectTransform>().anchoredPosition = new Vector2(108f, uiY);
 
             if (currentHealth <= 0)
             {
@@ -316,10 +315,14 @@ public class GameManager : MonoBehaviour
 
     public void AiGoalHit(GameObject scoringBall)
     {
+        float ballY = scoringBall.transform.position.y;
+        float uiY = ballY * 108f + 30f;
+        uiY = Mathf.Clamp(uiY, -440f, 500f);
+
         if (!isProtected)
         {
             // player gets damage
-            AddDamage(dmgPerMiss);
+            AddDamage(dmgPerMiss, uiY);
         }
 
         activeBalls.Remove(scoringBall);
@@ -388,26 +391,6 @@ public class GameManager : MonoBehaviour
         FeedbackTextCombo.gameObject.SetActive(false);
         feedbackcombocoroutine = null;
     }
-
-    private void ShowFeedbackDamage(string feedback)
-    {
-        FeedbackTextComboDamage.text = feedback;
-
-        if (feedbackdamagecoroutine != null)
-        {
-            StopCoroutine(feedbackdamagecoroutine);
-        }
-        feedbackdamagecoroutine = StartCoroutine(FeedbackDamageRoutine());
-    }
-
-    private IEnumerator FeedbackDamageRoutine()
-    {
-        FeedbackTextComboDamage.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        FeedbackTextComboDamage.gameObject.SetActive (false);
-        feedbackdamagecoroutine = null;
-    }
-
 
     // reset score and ball position
     public void RestartGame()
@@ -529,12 +512,6 @@ public class GameManager : MonoBehaviour
         {
             StopCoroutine(feedbackcombocoroutine);
             FeedbackTextCombo.gameObject.SetActive(false);
-        }
-
-        if (feedbackdamagecoroutine != null)
-        {
-            StopCoroutine(feedbackdamagecoroutine);
-            FeedbackTextComboDamage.gameObject.SetActive(false);
         }
 
         damageVignette.StopDamageVignette();
