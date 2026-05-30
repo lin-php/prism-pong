@@ -10,6 +10,7 @@ TagManager:
   - Ball
   - Wall
   - Deathparticle
+  - FloatingFeedback
   layers:
   - Default
   - TransparentFX

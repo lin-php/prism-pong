@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     private bool isMiddleClearRunning = false;
 
-    private string highScoreKey = "HighScore10";
+    private string highScoreKey = "HighScore100";
     
     private int highScore;
     private int score;
@@ -237,6 +237,12 @@ public class GameManager : MonoBehaviour
         UpdateHighScoreUI();
         Cursor.visible = true;
         StopFeedbackUI();
+
+        GameObject[] feedbackDamage = GameObject.FindGameObjectsWithTag("FloatingFeedback");
+        foreach (GameObject feedbackDamages in feedbackDamage)
+        {
+            Destroy(feedbackDamages);
+        }
 
         GameObject[] deathParticles = GameObject.FindGameObjectsWithTag("Deathparticle");
         foreach (GameObject deathParticle in deathParticles)
