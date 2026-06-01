@@ -4614,6 +4614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   canvasTransform: {fileID: 416781224}
   floatingDamagePrefab: {fileID: 1359159528420145920, guid: 06f1f12fc1b01ab4a84052aee4ad9633, type: 3}
+  floatingBonusPrefab: {fileID: 3607511444898881517, guid: a0142735a5764b94bbe1fb7e95483c7e, type: 3}
   nextPrismText: {fileID: 270000072}
   scoreText: {fileID: 31427053}
   TierUI: {fileID: 724112591}

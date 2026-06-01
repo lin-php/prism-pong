@@ -5,7 +5,7 @@ public class BallController : MonoBehaviour
 {
     [SerializeField] public float speed = 3.5f;
     [SerializeField] private GameManager gameManager;
-    [Space (20)]
+    [Space(20)]
     [SerializeField] private AudioClip paddleHit;
     [SerializeField] private AudioClip paddleAiHit;
     [Space(20)]
@@ -24,12 +24,12 @@ public class BallController : MonoBehaviour
     private ParticleSystemRenderer particleRenderer;
     private Animator animator;
     private Vector2 lastVelocity;
-    
+
 
     private Color currentColor;
     public Color CurrentColor { get { return spriteRenderer.material.color; } }
 
-    
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,7 +55,7 @@ public class BallController : MonoBehaviour
         // only play wall hit animation if the ball has enough vertical speed.
         // prevents animation spam while sliding along the wall.
         if (collision.gameObject.CompareTag("Wall"))
-        { 
+        {
             if (Mathf.Abs(lastVelocity.y) > 1f)
             {
                 animator.SetTrigger("BallHit");
@@ -81,7 +81,7 @@ public class BallController : MonoBehaviour
 
             AudioController.Instance.SoundOnHit(paddleHit, 1f);
 
-            gameManager.AddPlayerPointonPaddlehit();
+            gameManager.AddPlayerPointonPaddlehit(paddleY);
             SetRandomMaterial();
 
             Animator paddleAnimator = collision.gameObject.GetComponent<Animator>();
@@ -138,10 +138,10 @@ public class BallController : MonoBehaviour
         // set initial direction and apply velocity to the ball
         // set random colour
 
-        SetRandomMaterial();    
+        SetRandomMaterial();
 
         transform.position = Vector2.zero;
-        rb.linearVelocity = Vector2.zero;   
+        rb.linearVelocity = Vector2.zero;
 
         float spawnY = Random.Range(-1.6f, 1.6f);
         int randomX = Random.value < 0.5f ? -1 : 1;
@@ -173,7 +173,7 @@ public class BallController : MonoBehaviour
         spriteRenderer.material.color = newColor;
         spriteRenderer.material.SetColor("_EmissionColor", newColor * 5f);
 
-        
+
         innerRenderer.material.color = newColor;
         innerRenderer.material.SetColor("_EmissionColor", newColor * 0.5f);
 
@@ -183,7 +183,7 @@ public class BallController : MonoBehaviour
 
 
         // manually adjust blue and purple particle emission because bloom/emission makes it looks wrong
-        if (index == 0) 
+        if (index == 0)
         {
             Color blueEmission = new Color32(0, 15, 191, 255);
             particleRenderer.material.SetColor("_EmissionColor", blueEmission * 8f);
@@ -200,7 +200,7 @@ public class BallController : MonoBehaviour
         }
 
         particleRenderer.material.color = newColor;
-        
+
     }
     public Color ParticleColor
     {

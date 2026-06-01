@@ -18,7 +18,7 @@ public class StartMenuController : MonoBehaviour
     private void Awake()
     {
         Time.timeScale = 1f;
-        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        int highScore = PlayerPrefs.GetInt("HighScore001", 0);
         highScoreText.text = "High Score: " + highScore.ToString();
 
         float volume = PlayerPrefs.GetFloat("Volume", 0.7f);

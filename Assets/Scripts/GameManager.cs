@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private GameObject floatingDamagePrefab;
+    [SerializeField] private GameObject floatingBonusPrefab;
     [SerializeField] private TextMeshProUGUI nextPrismText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private bool isMiddleClearRunning = false;
 
-    private string highScoreKey = "HighScore100";
+    private string highScoreKey = "HighScore001";
     
     private int highScore;
     private int score;
@@ -170,7 +171,8 @@ public class GameManager : MonoBehaviour
             damageVignette.PlayDamageVignette();
 
             GameObject damageText = Instantiate(floatingDamagePrefab, canvasTransform);
-            damageText.GetComponent<RectTransform>().anchoredPosition = new Vector2(108f, uiY);
+            damageText.transform.SetAsFirstSibling();
+            damageText.GetComponent<RectTransform>().anchoredPosition = new Vector2(60f, uiY);
 
             if (currentHealth <= 0)
             {
@@ -273,12 +275,20 @@ public class GameManager : MonoBehaviour
         ShowFeedback("GOAL!");
     }
 
-    public void AddPlayerPointonPaddlehit()
+    public void AddPlayerPointonPaddlehit(float paddleY)
     {
         streak++;
         score += streak;
         UpdateScoreUI();
         Milestone();
+
+        float uiY = paddleY * 108f + 30f;
+        uiY = Mathf.Clamp(uiY, -440f, 500f);
+
+        GameObject bonusText = Instantiate(floatingBonusPrefab, canvasTransform);
+        bonusText.transform.SetAsFirstSibling();
+        bonusText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + streak;
+        bonusText.GetComponent<RectTransform>().anchoredPosition = new Vector2(460f, uiY);
     }
 
     // Event System
