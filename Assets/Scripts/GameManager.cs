@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private GameObject floatingDamagePrefab;
     [SerializeField] private GameObject floatingBonusPrefab;
+    [SerializeField] private GameObject floatingGoalPrefab;
+    [Space(15)]
     [SerializeField] private TextMeshProUGUI nextPrismText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI TierUI;
@@ -268,9 +270,18 @@ public class GameManager : MonoBehaviour
         score += streak;
         UpdateScoreUI();
 
+        float ballY = scoringBall.transform.position.y;
+
         activeBalls.Remove(scoringBall);
         Destroy(scoringBall);
-        ShowFeedback("GOAL!");
+
+        float uiY = ballY * 108f + 30f;
+        uiY = Mathf.Clamp(uiY, -440f, 500f);
+
+        GameObject goalText = Instantiate(floatingGoalPrefab, canvasTransform);
+        goalText.transform.SetAsFirstSibling();
+        goalText.GetComponent<RectTransform>().anchoredPosition = new Vector2(1930f, uiY);
+
     }
 
     public void AddPlayerPointonPaddlehit(float paddleY)

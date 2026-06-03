@@ -4513,6 +4513,7 @@ MonoBehaviour:
   canvasTransform: {fileID: 416781224}
   floatingDamagePrefab: {fileID: 1359159528420145920, guid: 06f1f12fc1b01ab4a84052aee4ad9633, type: 3}
   floatingBonusPrefab: {fileID: 3607511444898881517, guid: a0142735a5764b94bbe1fb7e95483c7e, type: 3}
+  floatingGoalPrefab: {fileID: 3607511444898881517, guid: e4de83fc256d9484d8ac5a04da90a334, type: 3}
   nextPrismText: {fileID: 270000072}
   scoreText: {fileID: 31427053}
   TierUI: {fileID: 724112591}
@@ -6952,6 +6953,10 @@ PrefabInstance:
     - target: {fileID: 3012829569768131599, guid: 1617e016e43e5c244a87ca8c8a87eb7b, type: 3}
       propertyPath: m_Name
       value: AiPaddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3012829569768131599, guid: 1617e016e43e5c244a87ca8c8a87eb7b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5965049566670423823, guid: 1617e016e43e5c244a87ca8c8a87eb7b, type: 3}
       propertyPath: m_LocalPosition.x
