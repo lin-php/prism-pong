@@ -107,12 +107,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        /* // Event Test
+        // Event Test
         if (Input.GetKeyDown(KeyCode.K))
         {
             streak = nextTierMilestone;
             Milestone();
-        } */
+        } 
 
         if (isGameOver) return;
 
