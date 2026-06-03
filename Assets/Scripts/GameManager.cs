@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI GameOverNewTiertext;
     [Space(15)]
     [SerializeField] private TextMeshProUGUI FeedbackText;
-    [SerializeField] private TextMeshProUGUI FeedbackTextCombo;
     
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider HealthUI;
@@ -71,7 +70,6 @@ public class GameManager : MonoBehaviour
     private float _speedTimer;
     private float currentSpeedBonus = 0;
     private Coroutine feedbackcoroutine;
-    private Coroutine feedbackcombocoroutine;
     private bool isProtected = false;
     private int nextTierMilestone = 15;
     private float safeBallSpawnTimer;
@@ -172,7 +170,7 @@ public class GameManager : MonoBehaviour
 
             GameObject damageText = Instantiate(floatingDamagePrefab, canvasTransform);
             damageText.transform.SetAsFirstSibling();
-            damageText.GetComponent<RectTransform>().anchoredPosition = new Vector2(60f, uiY);
+            damageText.GetComponent<RectTransform>().anchoredPosition = new Vector2(55f, uiY);
 
             if (currentHealth <= 0)
             {
@@ -303,8 +301,7 @@ public class GameManager : MonoBehaviour
 
             timerball = ball1Spawntimer * 0.7f;
             StartCoroutine(ReduceBalls(1f));
-   
-            ShowFeedbackCombo("+" + streak + " PERFECT!");
+
             ShowFeedback("Prism Clear!");
 
             isProtected = true;
@@ -314,18 +311,7 @@ public class GameManager : MonoBehaviour
             nextTierMilestone += 15;
             AudioController.Instance.SoundOnHit(EventSoundStreak, 1f);
         }
-        else if (streak % 10 == 0)
-        {
-            ShowFeedbackCombo("+" + streak + " GREAT!");
-        }
-        else if (streak % 5 == 0)
-        {
-            ShowFeedbackCombo("+" + streak + " GOOD!");
-        }
-        else
-        {
-            ShowFeedbackCombo("+" + streak);
-        }
+
         UpdateScoreUI();
     }
 
@@ -387,25 +373,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(4f);
         FeedbackText.gameObject.SetActive(false);
         feedbackcoroutine = null;
-    }
-
-    private void ShowFeedbackCombo(string feedback)
-    {
-        FeedbackTextCombo.text = feedback;
-       
-        if (feedbackcombocoroutine != null)
-        {
-            StopCoroutine(feedbackcombocoroutine);
-        }
-        feedbackcombocoroutine = StartCoroutine(FeedbackComboRoutine());
-    }
-
-    private IEnumerator FeedbackComboRoutine()
-    {
-        FeedbackTextCombo.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        FeedbackTextCombo.gameObject.SetActive(false);
-        feedbackcombocoroutine = null;
     }
 
     // reset score and ball position
@@ -522,12 +489,6 @@ public class GameManager : MonoBehaviour
         {
             StopCoroutine(feedbackcoroutine);
             FeedbackText.gameObject.SetActive(false);
-        }
-
-        if (feedbackcombocoroutine != null)
-        {
-            StopCoroutine(feedbackcombocoroutine);
-            FeedbackTextCombo.gameObject.SetActive(false);
         }
 
         damageVignette.StopDamageVignette();
