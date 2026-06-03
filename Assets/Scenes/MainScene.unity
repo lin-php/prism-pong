@@ -4638,12 +4638,12 @@ MonoBehaviour:
   maxBalls: 6
   extraPoints: 100
   maxHealth: 100
-  dmgPerMiss: 18
+  dmgPerMiss: 17
   baseRecoveryRate: 0.3
   extraRecoveryPerTier: 0.02
   speedTimer: 25
-  increaseBallSpeed: 0.06
-  maxSpeedBonus: 4.5
+  increaseBallSpeed: 0.05
+  maxSpeedBonus: 4
   protectionDuration: 2
   EventSoundStreak: {fileID: 8300000, guid: a449d8bbe31735841a18075437a03165, type: 3}
   ringPopEffect: {fileID: 1348092512705501097, guid: f54c4158b2296704490205ace4d5572c, type: 3}
