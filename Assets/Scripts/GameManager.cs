@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI GameOverNewTiertext;
     [Space(15)]
     [SerializeField] private TextMeshProUGUI FeedbackText;
-    
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Slider HealthUI;
     [SerializeField] private GameObject ball1Prefab;
@@ -56,6 +55,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ringPopEffect;
     [SerializeField] private GameObject deathParticleEffect;
     [SerializeField] private DamageVignette damageVignette;
+    [SerializeField] private Animator scoreAnimator;
 
     private bool isMiddleClearRunning = false;
 
@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
     
     private int highScore;
     private int score;
+
+    private int displayedScore;
+    private Coroutine scoreCoroutine;
+
     private int streak = 0;
     
     private float timerball;
@@ -79,12 +83,12 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> activeBalls = new List<GameObject>();  
     
-       
     private void Start()
     {
         
         Tier = 1;
         streak += 0;
+        scoreText.text = "0";
         safeBallSpawnTimer = ball1Spawntimer;
 
         currentHealth = maxHealth;
@@ -109,12 +113,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // Event Test
+        /* Event Test
         if (Input.GetKeyDown(KeyCode.K))
         {
             streak = nextTierMilestone;
             Milestone();
-        } 
+        } */
 
         if (isGameOver) return;
 
@@ -236,6 +240,10 @@ public class GameManager : MonoBehaviour
             GameOverNormalGroup.gameObject.SetActive(true);
         }
 
+        StopScoreCoroutine();
+        displayedScore = score;
+        scoreText.text = score.ToString();
+
         UpdateHighScoreUI();
         Cursor.visible = true;
         StopFeedbackUI();
@@ -262,13 +270,11 @@ public class GameManager : MonoBehaviour
         activeBalls.Add(ball1);
 
         aIPaddleController.SetBalls(activeBalls);
-
     }
 
     public void AddPlayerPointonGoal(GameObject scoringBall)
     {
-        score += streak;
-        UpdateScoreUI();
+        AddScore(streak);
 
         float ballY = scoringBall.transform.position.y;
 
@@ -287,8 +293,7 @@ public class GameManager : MonoBehaviour
     public void AddPlayerPointonPaddlehit(float paddleY)
     {
         streak++;
-        score += streak;
-        UpdateScoreUI();
+        AddScore(streak);
         Milestone();
 
         float uiY = paddleY * 108f + 30f;
@@ -305,7 +310,7 @@ public class GameManager : MonoBehaviour
     {
         if (streak >= nextTierMilestone)
         {
-            score += 100;
+            AddScore(100 + streak);
             currentHealth += 10;
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
             SliderDanger();
@@ -348,8 +353,6 @@ public class GameManager : MonoBehaviour
     {
         int hitsUntilPrism = nextTierMilestone - streak;
         hitsUntilPrism = Mathf.Max(0, hitsUntilPrism);
-
-        scoreText.text = score.ToString();
         nextPrismText.text = "Prism: " + hitsUntilPrism.ToString();  
         TierUI.text = "Level: " + Tier.ToString();
         GameOverNormalScoretext.text = "Score: " + score.ToString();
@@ -401,7 +404,10 @@ public class GameManager : MonoBehaviour
         GameOverPanel.SetActive(false);
         SliderDanger();
         ClearBalls();
+        StopScoreCoroutine();
         score = 0;
+        displayedScore = 0;
+        scoreText.text = "0";
         streak = 0;
         Tier = 1;
         UpdateScoreUI();
@@ -488,11 +494,9 @@ public class GameManager : MonoBehaviour
 
             destroyedBalls++;
         }
-        score += destroyedBalls * 10;
-        UpdateScoreUI();
+        
         isMiddleClearRunning = false;
     }
-
 
     private void StopFeedbackUI()
     {
@@ -503,6 +507,61 @@ public class GameManager : MonoBehaviour
         }
 
         damageVignette.StopDamageVignette();
+    }
+
+    private void AddScore(int amount)
+    {
+        score += amount;
+
+        if (scoreCoroutine == null)
+        {
+            scoreCoroutine = StartCoroutine(CountScoreUp());
+        }
+
+        UpdateScoreUI();
+    }
+
+    private IEnumerator CountScoreUp()
+    {
+        while (displayedScore < score)
+        {
+            int difference = score - displayedScore;
+
+            if (difference > 1000)
+            {
+                displayedScore += 5;
+            }
+            else if (difference > 750)
+            {
+                displayedScore += 4;
+            }
+            else if (difference > 500)
+            {
+                displayedScore += 3;
+            }
+            else if (difference > 200)
+            {
+                displayedScore += 2;
+            }
+            else displayedScore++;
+
+            scoreText.text = displayedScore.ToString();
+
+            yield return new WaitForSeconds(0.004f);
+
+        }
+
+        scoreCoroutine = null;
+        scoreAnimator.SetTrigger("ScoreUpdate");
+    }
+
+    private void StopScoreCoroutine()
+    {
+        if (scoreCoroutine != null)
+        {
+            StopCoroutine (scoreCoroutine);
+            scoreCoroutine = null;
+        }
     }
 
     // -> refactor; no deletingzone in the middle of field; all ball will be destroyed at event;
