@@ -9,6 +9,7 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip menuTheme;
     [SerializeField] private AudioClip gameSong;
     [SerializeField] private AudioClip highScoreTheme;
+    [SerializeField] private AudioClip uiClickSound;
 
     public static AudioController Instance;
 
@@ -54,4 +55,10 @@ public class AudioController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void UIClick()
+    {
+        SoundOnHit(uiClickSound, 1f);
+    }
+
 }
