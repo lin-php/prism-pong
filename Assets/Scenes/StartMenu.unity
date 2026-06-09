@@ -1722,7 +1722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6349660004709496992, guid: 39151ba64ce792c42a475f43502b3f72, type: 3}
       propertyPath: m_text
-      value: v.0.9  -  a game by lin.php
+      value: v. 1.0  -  a game by lin.php
       objectReference: {fileID: 0}
     - target: {fileID: 6349660004709496992, guid: 39151ba64ce792c42a475f43502b3f72, type: 3}
       propertyPath: m_fontSize
