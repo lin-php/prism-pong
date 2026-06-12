@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 0
+    path: Assets/Scenes/TrailerLoader.unity
+    guid: f8878327f8e0f2a418ac6f8a4b7db441
+  - enabled: 0
+    path: Assets/Scenes/Trailer_Szene.unity
+    guid: d24ec54b7944e0f4395bdb00918502a8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
